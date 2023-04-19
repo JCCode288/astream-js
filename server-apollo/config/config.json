@@ -1,0 +1,26 @@
+{
+  "development": {
+    "database": {
+      "url": "mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+1.8.0/astreamApollo_dev",
+      "options": {
+        "useNewUrlParser": true
+      }
+    }
+  },
+  "test": {
+    "database": {
+      "url": "mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+1.8.0/astreamApollo_test",
+      "options": {
+        "useNewUrlParser": true
+      }
+    }
+  },
+  "production": {
+    "database": {
+      "use_env_variable": "DATABASE_URL",
+      "options": {
+        "useNewUrlParser": true
+      }
+    }
+  }
+}
