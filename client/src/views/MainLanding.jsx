@@ -47,7 +47,7 @@ export default function MainLanding() {
 
   return (
     <>
-      <div className="container justify-center flex flex-row gap-4 flex-wrap">
+      <div className="justify-center flex flex-row gap-8 flex-wrap w-screen">
         <SearchBar setSearch={setSearchQuery} />
         {searchLoading ? (
           <Loader />
