@@ -1,13 +1,6 @@
 export default function SearchBar({ searchAnimes, setSearch }) {
-  let { loadRecentAnimes, loadSearchedAnimes } = searchAnimes;
   function handleSearch(e) {
     setSearch(e.target.value);
-    console.log(e.target.value);
-    if (e.target.value !== "") {
-      loadSearchedAnimes();
-    } else {
-      loadRecentAnimes();
-    }
   }
   return (
     <div className="block w-full form-control mt-4">
