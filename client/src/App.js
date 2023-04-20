@@ -8,7 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 function App() {
   return (
     <ApolloProvider client={client}>
-      <div className="App bg-gray-900">
+      <div className="App bg-gray-900 w-screen">
         <ToastContainer
           position="top-right"
           autoClose={1000}
