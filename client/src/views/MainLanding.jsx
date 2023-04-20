@@ -3,18 +3,12 @@ import { useLazyQuery, useQuery } from "@apollo/client";
 import { GET_RECENT_ANIMES, GET_SEARCHED_ANIMES } from "../store/anime";
 import { Anicard, SearchBar } from "../components";
 import Loader from "../components/Loader";
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 export default function MainLanding() {
-  let { loading, error, data: animes } = useQuery(GET_RECENT_ANIMES);
   let [searchQuery, setSearchQuery] = useState("");
 
-  if (loading) {
-    console.log(loading);
-  }
-  if (error) {
-    toast(error.message);
-  }
+  let { loading, error, data } = useQuery(GET_RECENT_ANIMES);
 
   let [loadSearchedAnimes, { called, error: errorSearch, data: searched }] =
     useLazyQuery(GET_SEARCHED_ANIMES, {
@@ -23,23 +17,24 @@ export default function MainLanding() {
       },
     });
 
-  let [
-    loadRecentAnimes,
-    { called: recentCalled, error: errorRecent, data: recentAnimesReload },
-  ] = useLazyQuery(GET_RECENT_ANIMES);
+  useEffect(() => {
+    loadSearchedAnimes();
+  }, [searchQuery]);
 
-  let recentAnimes = animes?.recentAnimes?.results;
+  let recentAnimes = useMemo(() => {
+    if (!searchQuery.length) {
+      return data.recentAnimes?.results;
+    } else {
+      return searched?.searchAnimes?.results;
+    }
+  }, [searchQuery]);
 
-  let queryCall;
-
-  if (called) {
-    recentAnimes = searched?.searchAnimes?.results;
-    called = false;
+  if (loading) {
+    return <Loader />;
   }
 
-  if (recentCalled) {
-    recentAnimes = recentAnimesReload?.recentAnimes?.results;
-    recentCalled = false;
+  if (error) {
+    toast(error.message);
   }
 
   if (errorSearch) {
@@ -48,19 +43,12 @@ export default function MainLanding() {
 
   return (
     <>
-      {loading ? (
-        <Loader />
-      ) : (
-        <div className="container justify-center flex flex-row gap-4 flex-wrap">
-          <SearchBar
-            searchAnimes={{ loadSearchedAnimes, loadRecentAnimes }}
-            setSearch={setSearchQuery}
-          />
-          {recentAnimes?.map((el) => (
-            <Anicard anime={el} key={el.id} />
-          ))}
-        </div>
-      )}
+      <div className="container justify-center flex flex-row gap-4 flex-wrap">
+        <SearchBar setSearch={setSearchQuery} />
+        {recentAnimes?.map((el) => (
+          <Anicard anime={el} key={el.id} />
+        ))}
+      </div>
     </>
   );
 }
