@@ -10,24 +10,28 @@ export default function MainLanding() {
 
   let { loading, error, data } = useQuery(GET_RECENT_ANIMES);
 
-  let [loadSearchedAnimes, { called, error: errorSearch, data: searched }] =
-    useLazyQuery(GET_SEARCHED_ANIMES, {
-      variables: {
-        query: { searchQuery },
-      },
-    });
+  let [
+    loadSearchedAnimes,
+    { called, error: errorSearch, data: searched, loading: searchLoading },
+  ] = useLazyQuery(GET_SEARCHED_ANIMES, {
+    variables: {
+      query: { searchQuery },
+    },
+  });
 
   useEffect(() => {
-    loadSearchedAnimes();
+    if (searchQuery) {
+      loadSearchedAnimes();
+    }
   }, [searchQuery]);
 
   let recentAnimes = useMemo(() => {
     if (!searchQuery.length) {
-      return data.recentAnimes?.results;
+      return data?.recentAnimes?.results;
     } else {
       return searched?.searchAnimes?.results;
     }
-  }, [searchQuery]);
+  }, [searchQuery, data, searched]);
 
   if (loading) {
     return <Loader />;
@@ -45,9 +49,11 @@ export default function MainLanding() {
     <>
       <div className="container justify-center flex flex-row gap-4 flex-wrap">
         <SearchBar setSearch={setSearchQuery} />
-        {recentAnimes?.map((el) => (
-          <Anicard anime={el} key={el.id} />
-        ))}
+        {searchLoading ? (
+          <Loader />
+        ) : (
+          recentAnimes?.map((el) => <Anicard anime={el} key={el.id} />)
+        )}
       </div>
     </>
   );
