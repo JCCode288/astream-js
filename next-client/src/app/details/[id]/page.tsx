@@ -1,5 +1,14 @@
-export default function DetailPage({ params }: any) {
-  let episodeId: string | undefined = params?.id;
+import { getAnimeDetail } from "@/actions";
 
-  return <div>masuk Detail {episodeId}</div>;
+export default async function DetailPage({ params }: any) {
+  let animeId: string = params?.id;
+
+  let animeDetail = await getAnimeDetail(animeId);
+
+  return (
+    <div>
+      masuk Detail {animeId}
+      <div>{JSON.stringify(animeDetail)}</div>
+    </div>
+  );
 }

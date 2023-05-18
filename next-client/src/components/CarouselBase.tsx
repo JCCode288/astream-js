@@ -14,10 +14,10 @@ export default function AniCarousel({ animes }: any) {
   return (
     <Swiper modules={[EffectFlip]} effect="flip" {...opts}>
       {animes.map((anime: IAnimeResult) => (
-        <SwiperSlide>
-          <div className="flex w-1/3">
+        <SwiperSlide key={anime.id}>
+          <div className="flex">
             <img
-              className="w-[30vw] h-fit"
+              className="sm:w-[30vw] w-screen h-fit"
               src={anime.image}
               alt={parseTitle(anime)}
             />

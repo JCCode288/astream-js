@@ -1,11 +1,11 @@
-import { Navbar } from "@/components";
+import { Footer, Navbar } from "@/components";
 import "./globals.css";
 import "swiper/css"; // core Swiper
 import "swiper/css/effect-flip";
 
-import { Inter } from "next/font/google";
+import { Montserrat } from "next/font/google";
 
-const inter = Inter({ subsets: ["latin"] });
+const montserrat = Montserrat({ subsets: ["latin"] });
 
 export const metadata = {
   title: "Astream@next",
@@ -19,9 +19,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={`${montserrat.className} text-accent`}>
         <Navbar />
         {children}
+        <Footer />
       </body>
     </html>
   );
