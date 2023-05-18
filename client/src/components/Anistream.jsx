@@ -1,12 +1,14 @@
 import { useQuery } from "@apollo/client";
-import { useOutletContext, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { GET_STREAM_LINKS } from "../store/anime";
 import Loader from "./Loader";
 import { toast } from "react-toastify";
 import Iframe from "react-iframe";
+import { useEffect, useRef } from "react";
 
 export default function Anistream() {
   let { episodeId } = useParams();
+  let streamEmbedRef = useRef(null);
 
   const { error, loading, data } = useQuery(GET_STREAM_LINKS, {
     variables: {
@@ -28,21 +30,22 @@ export default function Anistream() {
   if (error) {
     toast.error(error);
   }
-  if (loading) {
-    console.log(loading);
-  }
+  useEffect(() => {
+    if (!loading && streamEmbedRef) {
+      streamEmbedRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [loading, streamEmbedRef]);
 
   return (
-    <>
+    <div className="mx-auto py-4 flex justify-center flex-grow">
       {loading ? (
         <Loader />
       ) : (
-        <>
+        <div ref={streamEmbedRef} className="">
           {streamLink ? (
             <Iframe
+              className="h-[50vh] w-[50vw]"
               url={streamLink}
-              width="640px"
-              height="320px"
               id="stream"
               display="block"
               position="relative"
@@ -50,8 +53,8 @@ export default function Anistream() {
           ) : (
             <h1>No Streamable Links</h1>
           )}
-        </>
+        </div>
       )}
-    </>
+    </div>
   );
 }
