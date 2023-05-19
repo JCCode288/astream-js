@@ -2,17 +2,16 @@
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import { EffectFlip } from "swiper";
-import { parseTitle } from "../../helpers";
+import { parseTitle } from "../helpers";
 import { IAnimeResult } from "@consumet/extensions";
 
 export default function AniCarousel({ animes }: any) {
-  let opts = {
-    slidesPerView: 1,
-    pagination: true,
-  };
-
   return (
-    <Swiper modules={[EffectFlip]} effect="flip" {...opts}>
+    <Swiper
+      modules={[EffectFlip]}
+      effect="flip"
+      pagination={{ clickable: true }}
+    >
       {animes.map((anime: IAnimeResult) => (
         <SwiperSlide key={anime.id}>
           <div className="flex">

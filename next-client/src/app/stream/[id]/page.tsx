@@ -1,4 +1,6 @@
 import { getAnimeStream } from "@/actions";
+import { StreamContainer } from "@/components";
+import { episodeTitle } from "@/helpers";
 
 export default async function StreamPage({ params }: any) {
   let episodeId: string = params?.id;
@@ -6,10 +8,13 @@ export default async function StreamPage({ params }: any) {
   let streamLinks = await getAnimeStream(episodeId);
 
   return (
-    <div>
-      masuk ke stream page {episodeId}
-      <br />
-      {JSON.stringify(streamLinks)}
+    <div className="container flex flex-col relative my-4">
+      <div className="text-2xl relative left-[5%] pb-2 text-primary">
+        <strong>
+          <span>{episodeTitle(episodeId)}</span>
+        </strong>
+      </div>
+      <StreamContainer links={streamLinks} />
     </div>
   );
 }

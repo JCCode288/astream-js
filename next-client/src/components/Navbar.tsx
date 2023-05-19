@@ -2,10 +2,14 @@
 
 import Link from "next/link";
 
+import { Noto_Sans_JP } from "next/font/google";
+
+const notoSansJP = Noto_Sans_JP({ weight: "600", subsets: ["latin"] });
+
 export default function Navbar() {
   return (
     <div className="navbar bg-primary text-primary-content">
-      <div className="flex-none">
+      {/* <div className="flex-none">
         <button className="btn btn-square btn-ghost rounded-sm">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -21,13 +25,16 @@ export default function Navbar() {
             ></path>
           </svg>
         </button>
-      </div>
+      </div> */}
       <div className="flex-1">
         <Link
           href={"/"}
-          className="btn  rounded-sm btn-ghost normal-case text-xl"
+          className={
+            "btn  rounded-sm btn-ghost normal-case text-3xl text-accent-focus shadow-sm border-[1px] border-accent " +
+            notoSansJP.className
+          }
         >
-          Astream
+          あstream
         </Link>
       </div>
     </div>

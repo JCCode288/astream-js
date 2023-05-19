@@ -5,3 +5,5 @@ export { default as AniCarousel } from "./CarouselBase";
 export { default as AniHero } from "./HeroesBase";
 export { default as Footer } from "./FooterBase";
 export { default as Loading } from "./BaseLoading";
+export { default as StreamContainer } from "./StreamContainer";
+export { default as BtnProvider } from "./ButtonProvider";

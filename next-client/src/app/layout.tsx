@@ -1,7 +1,9 @@
 import { Footer, Navbar } from "@/components";
 import "./globals.css";
-import "swiper/css"; // core Swiper
+import "swiper/css";
 import "swiper/css/effect-flip";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
 
 import { Montserrat } from "next/font/google";
 
