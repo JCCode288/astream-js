@@ -15,8 +15,13 @@ export default function Navbar() {
 
   const handleSearch = (e: FormEvent) => {
     e.preventDefault();
-    let params = search.replaceAll(" ", "-");
-    router.push("/search/" + params);
+    console.log(search);
+
+    if (search) {
+      let params = search.replaceAll(" ", "-");
+
+      router.push("/search/" + params);
+    }
   };
 
   const inputChange = (e: ChangeEvent) => {
