@@ -3,7 +3,6 @@ import { Outlet, useNavigate, useParams } from "react-router-dom";
 import { GET_ANIME_INFO } from "../store/anime";
 import { toast } from "react-toastify";
 import { Loader } from "../components";
-import { useRef } from "react";
 
 export default function MainLanding() {
   let { animeId } = useParams();
@@ -17,11 +16,9 @@ export default function MainLanding() {
   }
 
   const anime = data?.animeInfo;
-  const streamAni = useRef(null);
 
   function toStream(episodeId) {
     navigate(episodeId);
-    streamAni.current.scrollIntoView({ behavior: "smooth" });
   }
 
   if (loading) {
@@ -89,8 +86,7 @@ export default function MainLanding() {
             </div>
           </div>
         </div>
-        <Outlet context={streamAni} />
-        <div ref={streamAni}></div>
+        <Outlet />
       </div>
     </>
   );
