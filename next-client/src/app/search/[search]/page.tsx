@@ -24,7 +24,7 @@ export default async function SearchPage({
 
   return (
     <div className="justify-center px-4 sm:mx-auto flex">
-      <AniSearch animes={searched} />;
+      <AniSearch animes={searched} />
     </div>
   );
 }
