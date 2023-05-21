@@ -3,30 +3,31 @@
 import Link from "next/link";
 
 import { Noto_Sans_JP } from "next/font/google";
+import { useRouter } from "next/navigation";
+import { ChangeEvent, FormEvent, useState } from "react";
 
 const notoSansJP = Noto_Sans_JP({ weight: "600", subsets: ["latin"] });
 
 export default function Navbar() {
+  const router = useRouter();
+
+  let [search, setSearch] = useState("");
+
+  const handleSearch = (e: FormEvent) => {
+    e.preventDefault();
+    let params = search.replaceAll(" ", "-");
+    router.push("/search/" + params);
+  };
+
+  const inputChange = (e: ChangeEvent) => {
+    let { value }: any = e.target;
+
+    setSearch(value);
+  };
+
   return (
-    <div className="navbar bg-primary text-primary-content shadow-sm shadow-primary-focus py-4">
-      {/* <div className="flex-none">
-        <button className="btn btn-square btn-ghost rounded-sm">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            className="inline-block w-5 h-5 stroke-current"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M4 6h16M4 12h16M4 18h16"
-            ></path>
-          </svg>
-        </button>
-      </div> */}
-      <div className="flex-1">
+    <div className="navbar bg-primary text-primary-content shadow-sm shadow-primary-focus py-4 sticky top-0 z-20">
+      <div className="flex-1 gap-4 sm:justify-between">
         <Link
           href={"/"}
           className={
@@ -36,6 +37,18 @@ export default function Navbar() {
         >
           あstream
         </Link>
+        <form
+          onSubmit={handleSearch}
+          className="flex form-control max-w-screen-sm"
+        >
+          <input
+            type="text"
+            placeholder="Search"
+            className="input text-accent input-bordered w-full focus:border-primary-focus border-2"
+            value={search}
+            onChange={inputChange}
+          />
+        </form>
       </div>
     </div>
   );

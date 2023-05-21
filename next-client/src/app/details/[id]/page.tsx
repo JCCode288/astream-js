@@ -23,7 +23,9 @@ export default async function DetailPage({ params }: any) {
             />
           </div>
           <div>
-            <h1 className="text-5xl font-bold">{parseTitle(animeDetail)}</h1>
+            <h1 className="text-5xl font-bold">{`${parseTitle(animeDetail)} ( ${
+              animeDetail.releaseDate
+            } )`}</h1>
             <p className="py-6">
               {animeDetail?.description
                 ? animeDetail.description
@@ -40,7 +42,7 @@ export default async function DetailPage({ params }: any) {
       <div className="divider"></div>
       <div className="flex flex-wrap gap-y-4 justify-evenly px-2 sm:px-4 sm:pb-4">
         {animeDetail.episodes ? (
-          animeDetail.episodes?.map((episode) => {
+          animeDetail.episodes?.reverse().map((episode) => {
             let title: string = episodeTitle(episode.id);
             return (
               <EpisodeBtn title={title} id={episode.id} key={episode.number} />

@@ -3,10 +3,9 @@
 import Link from "next/link";
 import { MainButton } from ".";
 import { parseTitle } from "../helpers";
+import { useRouter } from "next/navigation";
 
 export default function BaseCard({ anime }: any) {
-  console.log(anime);
-
   return (
     <div className="card border-[3px] shadow-md shadow-primary-focus rounded-sm border-primary items-stretch justify-center bg-base-200 align-middle text-base-content">
       <Link href={`/details/${anime.id}`}>

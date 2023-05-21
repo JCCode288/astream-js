@@ -57,3 +57,13 @@ export const getTopAiring = async (page: number = 1, type?: number) => {
     throw err;
   }
 };
+
+export const searchAnime = async (query: string) => {
+  try {
+    let animes = await animeProvider.search(query);
+
+    return animes.results;
+  } catch (err) {
+    throw err;
+  }
+};
