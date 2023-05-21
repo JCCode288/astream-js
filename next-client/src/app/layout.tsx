@@ -21,7 +21,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${montserrat.className} text-accent`}>
+      <body className={`${montserrat.className} text-accent w-screen`}>
         <Navbar />
         {children}
         <Footer />

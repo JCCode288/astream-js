@@ -8,7 +8,7 @@ const notoSansJP = Noto_Sans_JP({ weight: "600", subsets: ["latin"] });
 
 export default function Navbar() {
   return (
-    <div className="navbar bg-primary text-primary-content">
+    <div className="navbar bg-primary text-primary-content shadow-sm shadow-primary-focus py-4">
       {/* <div className="flex-none">
         <button className="btn btn-square btn-ghost rounded-sm">
           <svg
@@ -30,7 +30,7 @@ export default function Navbar() {
         <Link
           href={"/"}
           className={
-            "btn  rounded-sm btn-ghost normal-case text-3xl text-accent-focus shadow-sm border-[1px] border-accent " +
+            "btn  rounded-sm btn-ghost normal-case text-3xl text-accent-focus shadow-sm shadow-accent-focus border-2 border-accent " +
             notoSansJP.className
           }
         >
