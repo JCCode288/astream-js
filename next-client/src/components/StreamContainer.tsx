@@ -1,6 +1,13 @@
 "use client";
 
-import { MutableRefObject, Ref, useMemo, useRef, useState } from "react";
+import {
+  MutableRefObject,
+  Ref,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import BtnProvider from "./ButtonProvider";
 
 export default function StreamContainer({ links }: any) {
@@ -15,6 +22,12 @@ export default function StreamContainer({ links }: any) {
   }, [provider]);
 
   let iframeRef: MutableRefObject<HTMLIFrameElement | null> = useRef(null);
+
+  useEffect(() => {
+    if (iframeRef.current) {
+      iframeRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [iframeRef]);
 
   return (
     <div className="flex flex-col justify-center items-center">
