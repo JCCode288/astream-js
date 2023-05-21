@@ -22,7 +22,7 @@ export default function AniCarousel({ animes }: any) {
           <SwiperSlide key={anime.id}>
             <div className="flex align-middle justify-center sm:mt-0 mt-2">
               <div className="relative flex">
-                <h1 className="absolute  text-xl sm:text-2xl font-semibold text-primary  bg-accent p-1 justify-self-end shadow-sm border-[1px] sm:left-[-2rem] sm:top-[-1.5rem] left-[-1rem] top-[-1rem]  whitespace-pre">
+                <h1 className="absolute  text-xl sm:text-2xl font-semibold text-primary-content  bg-accent p-1 justify-self-end shadow-sm border-[1px] sm:left-[-2rem] sm:top-[-1.5rem] left-[-1rem] top-[-1rem]  whitespace-pre">
                   {handleTitle(anime)}
                 </h1>
               </div>

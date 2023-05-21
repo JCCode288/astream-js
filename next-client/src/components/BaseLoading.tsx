@@ -1,6 +1,12 @@
 "use client";
 
+import { useEffect } from "react";
+
 export default function LoadingPage() {
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
+
   return (
     <div className="relative flex w-screen h-screen items-center justify-center">
       <div className="flex absolute w-screen h-screen z-10 opacity-20 blur-3xl bg-white"></div>
