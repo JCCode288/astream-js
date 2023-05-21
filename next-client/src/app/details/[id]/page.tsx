@@ -1,5 +1,5 @@
 import { getAnimeDetail } from "@/actions";
-import { EpisodeBtn, GenreBtn } from "@/components";
+import { BackBtn, EpisodeBtn, GenreBtn } from "@/components";
 import { episodeTitle, parseTitle } from "@/helpers";
 
 export default async function DetailPage({ params }: any) {
@@ -9,6 +9,9 @@ export default async function DetailPage({ params }: any) {
 
   return (
     <div className="flex items-center flex-col my-4 gap-2">
+      <div className="w-full flex justify-start px-4">
+        <BackBtn />
+      </div>
       <div className="hero min-h-screen bg-base-200">
         <div className="hero-content flex-col lg:flex-row">
           <div className="indicator">

@@ -1,5 +1,5 @@
 import { getAnimeStream } from "@/actions";
-import { StreamContainer } from "@/components";
+import { BackBtn, StreamContainer } from "@/components";
 import { episodeTitle } from "@/helpers";
 
 export default async function StreamPage({ params }: any) {
@@ -9,6 +9,9 @@ export default async function StreamPage({ params }: any) {
 
   return (
     <div className="container flex flex-col relative my-4">
+      <div className="relative left-6">
+        <BackBtn />
+      </div>
       <div className="text-2xl relative left-[5%] pb-2 text-primary">
         <strong>
           <span>{episodeTitle(episodeId)}</span>
