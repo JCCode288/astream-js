@@ -15,7 +15,6 @@ export default function Navbar() {
 
   const handleSearch = (e: FormEvent) => {
     e.preventDefault();
-    console.log(search);
 
     if (search) {
       let params = search.replaceAll(" ", "-");
