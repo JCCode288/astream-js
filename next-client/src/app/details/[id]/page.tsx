@@ -9,14 +9,14 @@ export default async function DetailPage({ params }: any) {
 
   return (
     <div className="flex items-center flex-col my-4 gap-2">
-      <div className="w-full flex justify-start px-4">
+      <div className="w-full flex justify-start px-4 py-2 sm:py-0">
         <BackBtn />
       </div>
       <div className="hero min-h-screen bg-base-200">
         <div className="hero-content flex-col lg:flex-row">
           <div className="indicator">
             <div className="indicator-item indicator-top indicator-start sm:indicator-end">
-              <button className="btn btn-primary rounded-sm">
+              <button className="btn btn-primary rounded-sm no-animation cursor-default shadow-md border-2 border-accent-focus">
                 {animeDetail?.subOrDub}
               </button>
             </div>

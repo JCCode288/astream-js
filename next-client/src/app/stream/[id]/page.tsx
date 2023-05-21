@@ -9,7 +9,7 @@ export default async function StreamPage({ params }: any) {
 
   return (
     <div className="container flex flex-col relative my-4">
-      <div className="relative left-6">
+      <div className="relative left-6 py-4">
         <BackBtn />
       </div>
       <div className="text-2xl relative left-[5%] pb-2 text-primary">
