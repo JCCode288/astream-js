@@ -9,4 +9,5 @@ export { default as StreamContainer } from "./StreamContainer";
 export { default as BtnProvider } from "./ButtonProvider";
 export { default as GenreBtn } from "./GenreButton";
 export { default as EpisodeBtn } from "./DetailEpisodeBtn";
+export { default as BackBtn } from "./ButtonBack";
 export { default as AniSearch } from "./SearchCarousel";
