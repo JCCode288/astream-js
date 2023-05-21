@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 
 export default function BaseCard({ anime }: any) {
   return (
-    <div className="card border-[3px] shadow-md shadow-primary-focus rounded-sm border-primary items-stretch justify-center bg-base-200 align-middle text-base-content">
+    <div className="card border-[3px] shadow-sm shadow-primary-focus rounded-sm border-primary items-stretch justify-center bg-base-200 align-middle text-base-content hover:shadow-primary-content hover:shadow-md ease-in-out duration-200">
       <Link href={`/details/${anime.id}`}>
         <figure>
           <img
