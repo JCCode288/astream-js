@@ -13,7 +13,7 @@ export default async function Home() {
       </main>
       <div className="divider"></div>
       <h1 className="mx-4 my-2 text-3xl font-semibold">Recent Anime</h1>
-      <main className="flex flex-row flex-wrap gap-x-4 gap-y-8 container sm:mx-auto mx-auto px-2 sm:py-4 my-6 justify-center">
+      <main className="flex flex-row flex-wrap gap-x-4 gap-y-8 container sm:mx-auto mx-auto px-2 sm:px-0 sm:py-4 my-6 justify-center">
         {animesRecent.map((anime) => (
           <AniCard key={anime.id} anime={anime} />
         ))}

@@ -7,3 +7,5 @@ export { default as Footer } from "./FooterBase";
 export { default as Loading } from "./BaseLoading";
 export { default as StreamContainer } from "./StreamContainer";
 export { default as BtnProvider } from "./ButtonProvider";
+export { default as GenreBtn } from "./GenreButton";
+export { default as EpisodeBtn } from "./DetailEpisodeBtn";
