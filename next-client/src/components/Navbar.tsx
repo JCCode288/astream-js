@@ -48,7 +48,7 @@ export default function Navbar() {
           <input
             type="text"
             placeholder="Search"
-            className="input text-accent input-bordered w-full focus:border-primary-focus border-2"
+            className="input text-accent input-bordered w-full focus:border-primary-focus border-2 rounded-[5px]"
             value={search}
             onChange={inputChange}
           />
