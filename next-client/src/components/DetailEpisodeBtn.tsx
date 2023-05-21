@@ -17,7 +17,7 @@ export default function CarouselDetail({
       onClick={() => {
         router.push(`/stream/${id}`);
       }}
-      className="sm:btn border-2 border-accent shadow-sm shadow-accent-focus sm:btn-primary flex text-start flex-wrap bg-primary font-semibold py-1 px-2 text-primary-content rounded-sm"
+      className="sm:btn border-2 border-accent shadow-sm shadow-accent-focus sm:btn-primary flex text-start flex-wrap bg-primary font-semibold py-1 px-2 text-primary-content sm:w-fit sm:rounded-sm rounded-sm"
     >
       Watch {episodeTitle(id)}
     </div>
