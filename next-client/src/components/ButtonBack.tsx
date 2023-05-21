@@ -9,7 +9,10 @@ export default function ButtonBack() {
   };
 
   return (
-    <button onClick={handleBack} className="btn btn-error w-fit">
+    <button
+      onClick={handleBack}
+      className="btn btn-error w-fit rounded-sm btn-outline border-2 shadow-sm"
+    >
       Go Back
     </button>
   );

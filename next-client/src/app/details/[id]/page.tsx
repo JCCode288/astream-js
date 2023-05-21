@@ -16,7 +16,7 @@ export default async function DetailPage({ params }: any) {
         <div className="hero-content flex-col lg:flex-row">
           <div className="indicator">
             <div className="indicator-item indicator-top indicator-start sm:indicator-end">
-              <button className="btn btn-primary rounded-sm">
+              <button className="btn btn-primary rounded-sm no-animation cursor-default">
                 {animeDetail?.subOrDub}
               </button>
             </div>

@@ -26,7 +26,7 @@ module.exports = {
           accent: "#FCE4A2",
           "accent-focus": "#978961",
           "accent-content": "#322E20",
-          "base-100": "#253220",
+          "base-100": "#4A6541",
         },
       },
     ],
