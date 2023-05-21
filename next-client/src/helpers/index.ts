@@ -28,3 +28,30 @@ export const episodeTitle = (episodeId: string) => {
   });
   return splitted.join(" ");
 };
+
+export const handleTitle = (anime: IAnimeResult) => {
+  let title = parseTitle(anime);
+
+  let titleSplitted = title.split(" ");
+
+  if (titleSplitted.length > 6) {
+    let result = "";
+    for (let i = 0; i <= titleSplitted.length; i++) {
+      result += titleSplitted[i];
+      if (i === titleSplitted.length - 1) {
+        return result;
+      }
+      if ((i + 1) % 4 === 0) {
+        result += "\n";
+      } else {
+        result += " ";
+      }
+    }
+  } else if (titleSplitted.length > 3) {
+    let [first, second, ...rest]: string[] = titleSplitted;
+
+    return `${first} ${second}\n${rest.join(" ")}`;
+  }
+
+  return title;
+};

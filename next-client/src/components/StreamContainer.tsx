@@ -17,7 +17,7 @@ export default function StreamContainer({ links }: any) {
   let iframeRef: MutableRefObject<HTMLIFrameElement | null> = useRef(null);
 
   return (
-    <div className="flex flex-col w-full h-full justify-center items-center">
+    <div className="flex flex-col justify-center items-center">
       <div className="flex justify-center">
         <iframe
           onPlaying={() => {
@@ -30,7 +30,7 @@ export default function StreamContainer({ links }: any) {
           }
           allowFullScreen={true}
           ref={iframeRef}
-          className="h-full sm:h-[80vh] w-[70vw] overflow-y-hidden border-2 border-accent shadow-md shadow-accent-focus rounded-sm"
+          className="sm:h-[40vh] md:h-[80vh] sm:w-[70vw] w-full overflow-y-hidden border-2 border-accent shadow-md shadow-accent-focus rounded-sm"
           src={usedProvider}
         />
       </div>
