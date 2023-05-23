@@ -4,9 +4,8 @@ import ButtonCTA from "@/components/ButtonCTA";
 import Link from "next/link";
 
 export default function Error({ error }: { error: Error; reset: () => void }) {
-  let message = error.message.match(/(not found)/i)
-    ? "Hmm, you searching for what again? are you sure of such title?"
-    : "Sorry!, something maybe broken";
+  let message =
+    "Hmm, you searching for what again? are you sure of such title?";
 
   return (
     <div className="w-screen h-[60vh] flex flex-auto flex-col gap-4 p-8">
