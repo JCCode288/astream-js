@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { MainButton } from ".";
 import { parseTitle } from "../helpers";
-import { useRouter } from "next/navigation";
 
 export default function BaseCard({ anime }: any) {
   return (

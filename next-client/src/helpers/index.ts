@@ -2,7 +2,7 @@ import { IAnimeResult } from "@consumet/extensions";
 import { Dispatch, SetStateAction } from "react";
 
 export const parseTitle = (anime: IAnimeResult) => {
-  let title = anime.title;
+  let title: string = anime.title.toString();
 
   if (!title) {
     title = anime.id
@@ -16,7 +16,7 @@ export const parseTitle = (anime: IAnimeResult) => {
       .join(" ");
   }
 
-  return title.toString();
+  return title;
 };
 
 export const episodeTitle = (episodeId: string) => {
