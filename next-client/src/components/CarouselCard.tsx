@@ -1,14 +1,8 @@
 import { handleTitle, parseTitle } from "@/helpers";
 import { IAnimeResult } from "@consumet/extensions";
-import { AppRouterInstance } from "next/dist/shared/lib/app-router-context";
+import Link from "next/link";
 
-export default function CarouselCard({
-  anime,
-  router,
-}: {
-  anime: IAnimeResult;
-  router: AppRouterInstance;
-}) {
+export default function CarouselCard({ anime }: { anime: IAnimeResult }) {
   return (
     <div className="flex align-middle justify-center sm:mt-0 mt-2">
       <div className="flex indicator h-full sm:pt-0 pt-4">
@@ -16,14 +10,13 @@ export default function CarouselCard({
           {handleTitle(anime)}
         </h1>
       </div>
-      <img
-        onClick={() => {
-          router.push(`/details/${anime.id}`);
-        }}
-        className="swiper-slide-img h-[60vh] sm:h-[73vh] rounded-sm border-[2px] shadow-md shadow-primary-focus border-primary cursor-pointer"
-        src={anime.image}
-        alt={parseTitle(anime)}
-      />
+      <Link href={`/details/${anime.id}`}>
+        <img
+          className="swiper-slide-img h-[60vh] sm:h-[73vh] rounded-sm border-[2px] shadow-md shadow-primary-focus border-primary cursor-pointer"
+          src={anime.image}
+          alt={parseTitle(anime)}
+        />
+      </Link>
     </div>
   );
 }

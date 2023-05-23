@@ -3,13 +3,11 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper";
 import { IAnimeResult } from "@consumet/extensions";
-import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import CarouselCard from "./CarouselCard";
 import { slideResponsive } from "@/helpers";
 
 export default function SearchCarousel({ animes }: any) {
-  const router = useRouter();
   const [windowSize, setWindowSize] = useState(0);
 
   useEffect(() => {
@@ -37,7 +35,7 @@ export default function SearchCarousel({ animes }: any) {
             className="h-full text-center py-6 sm:pl-7 pl-4"
             key={anime.id}
           >
-            <CarouselCard anime={anime} router={router} />
+            <CarouselCard anime={anime} />
           </SwiperSlide>
         ))}
       </Swiper>
