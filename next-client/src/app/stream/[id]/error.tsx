@@ -4,9 +4,7 @@ import ButtonCTA from "@/components/ButtonCTA";
 import Link from "next/link";
 
 export default function Error({ error }: { error: Error; reset: () => void }) {
-  let message = error.message.match(/(episode)/i)
-    ? "Oops! Maybe the episode is not there, is it?"
-    : "Sorry!, something maybe broken";
+  let message = "Oops! Maybe the episode is not there, is it?";
 
   return (
     <div className="w-screen h-[60vh] flex flex-auto flex-col gap-4 p-8">
