@@ -39,6 +39,10 @@ export const getAnimeStream = async (episodeId: string) => {
 
     let streamLinks = await animeProvider.fetchEpisodeServers(episodeId);
 
+    if (!streamLinks.length) {
+      throw new Error("Episode not found");
+    }
+
     return streamLinks;
   } catch (err) {
     throw err;

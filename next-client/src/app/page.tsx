@@ -1,9 +1,14 @@
 import { getRecentAnime, getTopAiring } from "@/actions";
 import { AniCard, AniCarousel } from "@/components";
+import { notFound } from "next/navigation";
 
 export default async function Home() {
   let animesTop = await getTopAiring();
   let animesRecent = await getRecentAnime();
+
+  if (!animesTop.length || !animesRecent.length) {
+    return notFound();
+  }
 
   return (
     <>
