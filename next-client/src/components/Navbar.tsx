@@ -39,7 +39,7 @@ export default function Navbar() {
             notoSansJP.className
           }
         >
-          アニStream
+          <strong>アニStream</strong>
         </Link>
         <form
           onSubmit={handleSearch}

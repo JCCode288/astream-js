@@ -21,6 +21,15 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        <meta name="robots" content="all" />
+        <title>Astream@Next</title>
+        <meta
+          name="description"
+          content="Anime Streaming website using Next.js"
+        />
+        <link rel="canonical" href="https://astream-js.vercel.app" />
+      </head>
       <body
         className={`${montserrat.className} text-accent w-screen sm:w-full`}
       >
