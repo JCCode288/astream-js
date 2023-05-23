@@ -1,4 +1,5 @@
 import { IAnimeResult } from "@consumet/extensions";
+import { Dispatch, SetStateAction } from "react";
 
 export const parseTitle = (anime: IAnimeResult) => {
   let title = anime.title;
@@ -54,4 +55,18 @@ export const handleTitle = (anime: IAnimeResult) => {
   }
 
   return title;
+};
+
+export const slideResponsive = (
+  setWindowSize: Dispatch<SetStateAction<any>>
+) => {
+  const windowWidth = window.innerWidth;
+
+  if (windowWidth < 480) {
+    setWindowSize(1);
+  } else if (windowWidth < 800) {
+    setWindowSize(2);
+  } else {
+    setWindowSize(3);
+  }
 };
