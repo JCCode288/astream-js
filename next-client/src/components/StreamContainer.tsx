@@ -30,7 +30,7 @@ export default function StreamContainer({ links }: any) {
   }, [iframeRef]);
 
   return (
-    <div className="flex flex-col justify-center items-center">
+    <div className="flex flex-col justify-center items-center px-4 sm:px-0">
       <div className="flex justify-center">
         <iframe
           onPlaying={() => {
@@ -43,7 +43,7 @@ export default function StreamContainer({ links }: any) {
           }
           allowFullScreen={true}
           ref={iframeRef}
-          className="sm:h-[40vh] md:h-[80vh] sm:w-[70vw] w-full overflow-y-hidden border-2 border-accent shadow-md shadow-accent-focus rounded-sm"
+          className="sm:h-[40vh]  md:h-[80vh] sm:w-[70vw]  w-[90vw] h-[35vh] overflow-y-hidden border-2 border-accent shadow-md shadow-accent-focus rounded-sm overflow-hidden"
           src={usedProvider}
         />
       </div>
