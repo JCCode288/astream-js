@@ -22,7 +22,16 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <meta name="robots" content="all" />
+        <meta name="robots" content="index, follow" />
+        <meta
+          name="keywords"
+          content="Anime, Stream, New Brutalism, English, Subtitle"
+        />
+        <meta property="og:site_name" content="astream" />
+        <meta property="og:url" content="https://astream.somelogo.shop" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="anime streaming" />
+        <meta property="og:description" content="Web Anime Streaming" />
         <title>Astream@Next</title>
         <meta
           name="description"
@@ -30,7 +39,7 @@ export default function RootLayout({
         />
         <meta
           name="google-site-verification"
-          content="JWWt-mmCURoSNcZsgzV3vLUvZrbbUp3h_HO8tuLPBBA"
+          content="MJMQX8AxbAqvEijPIfcexV0I8LRR-IPCt8-Vm0bcj1Y"
         />
       </head>
       <body
