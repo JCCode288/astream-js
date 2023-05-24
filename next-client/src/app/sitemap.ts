@@ -3,19 +3,19 @@ import { MetadataRoute } from "next";
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
     {
-      url: "https://astream-js.vercel.app",
+      url: "https://astream.somelogo.shop",
       lastModified: new Date(),
     },
     {
-      url: "https://astream-js.vercel.app/search",
+      url: "https://astream.somelogo.shop/search",
       lastModified: new Date(),
     },
     {
-      url: "https://astream-js.vercel.app/details",
+      url: "https://astream.somelogo.shop/details",
       lastModified: new Date(),
     },
     {
-      url: "https://astream-js.vercel.app/stream",
+      url: "https://astream.somelogo.shop/stream",
       lastModified: new Date(),
     },
   ];
