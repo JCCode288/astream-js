@@ -121,16 +121,12 @@ export const getTopAiring = async (page: number = 1, type?: number) => {
 
 export const searchAnime = async (query: string) => {
   try {
-    if (!query) {
-      return;
-    }
-
     let cachedSearch = await redis.get(animeKeys.search + query);
     let animes: ISearch<IAnimeResult>;
 
     if (cachedSearch) {
       animes = JSON.parse(cachedSearch);
-      return animes;
+      return animes.results;
     }
 
     animes = await animeProvider.search(query);
