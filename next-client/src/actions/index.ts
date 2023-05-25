@@ -10,7 +10,6 @@ import {
 } from "@consumet/extensions";
 import redis from "./redis";
 
-const animeProvider = new ANIME.Gogoanime();
 let animeKeys = {
   recent: "animes/recent",
   topAir: "animes/topAiring",
@@ -19,6 +18,8 @@ let animeKeys = {
   prevNext: "animes/animeId/",
   stream: "animes/stream/",
 };
+
+const animeProvider = new ANIME.Gogoanime();
 
 export const getRecentAnime = async (page: number = 1, type?: number) => {
   try {
@@ -56,12 +57,7 @@ export const getAnimeDetail = async (id: string) => {
     }
 
     animeInfo = await animeProvider.fetchAnimeInfo(id);
-    redis.set(
-      animeKeys.details + id,
-      JSON.stringify(animeInfo),
-      "EX",
-      60 * 60 * 24 * 7
-    );
+    redis.set(animeKeys.details + id, JSON.stringify(animeInfo), "EX", 60 * 15);
 
     return animeInfo;
   } catch (err) {
@@ -115,7 +111,7 @@ export const getTopAiring = async (page: number = 1, type?: number) => {
     }
 
     animes = await animeProvider.fetchTopAiring(...opts);
-    redis.set(animeKeys.topAir, JSON.stringify(animes), "EX", 60 * 60);
+    redis.set(animeKeys.topAir, JSON.stringify(animes), "EX", 60 * 60 * 24);
 
     return animes.results;
   } catch (err) {
