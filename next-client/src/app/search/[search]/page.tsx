@@ -1,5 +1,6 @@
 import { searchAnime } from "@/actions";
 import { AniSearch } from "@/components";
+import { IAnimeResult } from "@consumet/extensions";
 
 export default async function SearchPage({
   params,
@@ -10,7 +11,7 @@ export default async function SearchPage({
 
   search = search.replaceAll("-", " ");
 
-  let searched = await searchAnime(search);
+  let searched: IAnimeResult[] = await searchAnime(search);
 
   if (!searched.length) {
     return (
