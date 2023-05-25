@@ -11,8 +11,8 @@ import {
 import redis from "./redis";
 
 let animeKeys = {
-  recent: "animes/recent",
-  topAir: "animes/topAiring",
+  recent: "animes/recent/",
+  topAir: "animes/topAiring/",
   details: "animes/details/",
   search: "animes/search/",
   prevNext: "animes/animeId/",
@@ -25,7 +25,7 @@ export const getRecentAnime = async (page: number = 1, type?: number) => {
   try {
     let opts = [page, type];
 
-    let animesCached = await redis.get(animeKeys.recent);
+    let animesCached = await redis.get(animeKeys.recent + page);
     let animes: ISearch<IAnimeResult>;
 
     if (animesCached) {
@@ -34,7 +34,12 @@ export const getRecentAnime = async (page: number = 1, type?: number) => {
     }
 
     animes = await animeProvider.fetchRecentEpisodes(...opts);
-    redis.set(animeKeys.recent, JSON.stringify(animes), "EX", 60 * 15);
+    await redis.set(
+      animeKeys.recent + animes.currentPage,
+      JSON.stringify(animes),
+      "EX",
+      60 * 15
+    );
 
     return animes.results;
   } catch (err) {
@@ -57,7 +62,12 @@ export const getAnimeDetail = async (id: string) => {
     }
 
     animeInfo = await animeProvider.fetchAnimeInfo(id);
-    redis.set(animeKeys.details + id, JSON.stringify(animeInfo), "EX", 60 * 15);
+    await redis.set(
+      animeKeys.details + id,
+      JSON.stringify(animeInfo),
+      "EX",
+      60 * 15
+    );
 
     return animeInfo;
   } catch (err) {
@@ -85,7 +95,7 @@ export const getAnimeStream = async (episodeId: string) => {
       throw new Error("Episode not found");
     }
 
-    redis.set(
+    await redis.set(
       animeKeys.stream + episodeId,
       JSON.stringify(streamLinks),
       "EX",
@@ -102,7 +112,7 @@ export const getTopAiring = async (page: number = 1, type?: number) => {
   try {
     let opts = [page, type];
 
-    let cachedTop = await redis.get(animeKeys.topAir);
+    let cachedTop = await redis.get(animeKeys.topAir + page);
     let animes: ISearch<IAnimeResult>;
 
     if (cachedTop) {
@@ -111,7 +121,12 @@ export const getTopAiring = async (page: number = 1, type?: number) => {
     }
 
     animes = await animeProvider.fetchTopAiring(...opts);
-    redis.set(animeKeys.topAir, JSON.stringify(animes), "EX", 60 * 60 * 24);
+    await redis.set(
+      animeKeys.topAir + animes.currentPage,
+      JSON.stringify(animes),
+      "EX",
+      60 * 60 * 24
+    );
 
     return animes.results;
   } catch (err) {
@@ -130,7 +145,7 @@ export const searchAnime = async (query: string) => {
     }
 
     animes = await animeProvider.search(query);
-    redis.set(
+    await redis.set(
       animeKeys.search + query,
       JSON.stringify(animes),
       "EX",
@@ -150,21 +165,18 @@ interface EpisodeStream {
 
 export const getPrevNextEpisodes = async (episodeId: string) => {
   try {
+    let cachedEpisodes = await redis.get(animeKeys.prevNext + episodeId);
+    let episodes: EpisodeStream;
+
+    if (cachedEpisodes) {
+      episodes = JSON.parse(cachedEpisodes);
+      return episodes;
+    }
+
     let episodeIdSplitted = episodeId.split("-");
     let episodeNow = episodeIdSplitted[episodeIdSplitted.length - 1];
 
-    let animeId: string | null = await redis.get(
-      animeKeys.prevNext + episodeId
-    );
-
-    if (!animeId) {
-      let animeIdx = episodeIdSplitted.findIndex((el) => {
-        return el.match(/(episode)/i);
-      });
-      animeId = episodeIdSplitted.slice(0, animeIdx).join("-");
-
-      redis.set(animeKeys.prevNext, animeId);
-    }
+    let animeId = await animeProvider.fetchAnimeIdFromEpisodeId(episodeId);
 
     let animeEpisodes = (
       await animeProvider.fetchAnimeInfo(animeId)
@@ -173,7 +185,7 @@ export const getPrevNextEpisodes = async (episodeId: string) => {
       if ((el.number + 1).toString() === episodeNow) return el;
     });
 
-    let episodes: EpisodeStream = {};
+    episodes = {};
 
     if (animeEpisodes?.length) {
       if (+episodeNow !== 1) {
@@ -184,6 +196,13 @@ export const getPrevNextEpisodes = async (episodeId: string) => {
 
       if (animeEpisodes[1]) episodes.next = animeEpisodes[1];
     }
+
+    await redis.set(
+      animeKeys.prevNext + episodeId,
+      JSON.stringify(episodes),
+      "EX",
+      60 * 60 * 24
+    );
 
     return episodes;
   } catch (err) {
