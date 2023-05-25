@@ -100,9 +100,10 @@ export const getPrevNextEpisodes = async (episodeId: string) => {
 
     let episodes: EpisodeStream = {};
 
-    if (animeEpisodes) {
+    if (animeEpisodes?.length) {
       episodes.prev = animeEpisodes[0];
-      episodes.next = animeEpisodes[1];
+
+      if (animeEpisodes[1]) episodes.next = animeEpisodes[1];
     }
 
     return episodes;
