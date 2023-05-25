@@ -37,10 +37,6 @@ export default function RootLayout({
           name="description"
           content="Anime Streaming website using Next.js"
         />
-        <meta
-          name="google-site-verification"
-          content="MJMQX8AxbAqvEijPIfcexV0I8LRR-IPCt8-Vm0bcj1Y"
-        />
       </head>
       <body
         className={`${montserrat.className} text-accent w-screen sm:w-full`}
