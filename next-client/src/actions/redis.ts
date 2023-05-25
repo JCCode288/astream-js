@@ -7,9 +7,10 @@ if (
 ) {
   dotenv.config();
 }
+
 const config = {
   port: Number(process.env.REDIS_PORT) || 6379, // Redis port
-  host: process.env.REDIS_HOST || "localhost", // Redis host
+  host: process.env.REDIS_HOST || "127.0.0.1", // Redis host
   password: process.env.REDIS_PASSWORD || "",
 };
 
