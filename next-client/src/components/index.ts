@@ -11,3 +11,4 @@ export { default as GenreBtn } from "./GenreButton";
 export { default as EpisodeBtn } from "./DetailEpisodeBtn";
 export { default as BackBtn } from "./ButtonBack";
 export { default as AniSearch } from "./SearchCarousel";
+export { default as MainPagination } from "./BasePagination";

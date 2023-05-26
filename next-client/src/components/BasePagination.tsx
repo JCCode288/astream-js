@@ -1,0 +1,36 @@
+"use client";
+
+import Link from "next/link";
+export default function MainPagination({
+  page,
+}: {
+  page: number | string | undefined;
+}) {
+  page = page || 1;
+  return (
+    <div className="flex justify-center gap-4 py-4">
+      {+page > 1 ? (
+        <Link href={`/?page=${+page - 1}`}>
+          <img
+            width="64"
+            height="64"
+            src="https://img.icons8.com/color-glass/96/next.png"
+            alt="prev"
+            className="scale-x-[-1] hover:shadow-sm border-primary-focus border-2 hover:shadow-black ease-in duration-100 rounded-md"
+          />
+        </Link>
+      ) : (
+        ""
+      )}
+      <Link href={`/?page=${+page + 1}`}>
+        <img
+          width="64"
+          height="64"
+          src="https://img.icons8.com/color-glass/96/next.png"
+          alt="next"
+          className="hover:shadow-sm border-primary-focus border-2 hover:shadow-black ease-in duration-100 rounded-md"
+        />
+      </Link>
+    </div>
+  );
+}
