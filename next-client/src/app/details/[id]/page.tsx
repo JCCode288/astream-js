@@ -1,6 +1,7 @@
 import { getAnimeDetail } from "@/actions";
 import { BackBtn, EpisodeBtn, GenreBtn } from "@/components";
 import { episodeTitle, parseTitle } from "@/helpers";
+import Link from "next/link";
 
 export default async function DetailPage({ params }: any) {
   let animeId: string = params?.id;
@@ -36,7 +37,9 @@ export default async function DetailPage({ params }: any) {
             </p>
             <div className="gap-2 flex flex-wrap">
               {animeDetail.genres?.map((genre, idx) => (
-                <GenreBtn genre={genre} key={idx} />
+                <Link href={"/genres/" + genre}>
+                  <GenreBtn genre={genre} key={idx} />
+                </Link>
               ))}
             </div>
           </div>

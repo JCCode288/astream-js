@@ -17,6 +17,7 @@ let animeKeys = {
   search: "animes/search/",
   prevNext: "animes/animeId/",
   stream: "animes/stream/",
+  aniGenres: "animes/byGenres/",
 };
 
 const animeProvider = new ANIME.Gogoanime();
@@ -208,6 +209,30 @@ export const getPrevNextEpisodes = async (episodeId: string) => {
     );
 
     return episodes;
+  } catch (err) {
+    throw err;
+  }
+};
+
+export const getAnimesByGenres = async (genres: string, page: number = 1) => {
+  try {
+    let cachedAniGenres = await redis.get(animeKeys.aniGenres + genres);
+    let aniGenres: ISearch<IAnimeResult>;
+
+    if (cachedAniGenres) {
+      aniGenres = JSON.parse(cachedAniGenres);
+      return aniGenres;
+    }
+
+    aniGenres = await animeProvider.fetchGenreInfo(genres, +page);
+    await redis.set(
+      animeKeys.aniGenres + genres,
+      JSON.stringify(aniGenres),
+      "EX",
+      60 * 15
+    );
+
+    return aniGenres;
   } catch (err) {
     throw err;
   }
