@@ -108,9 +108,12 @@ export const getAnimeStream = async (episodeId: string) => {
   }
 };
 
-export const getTopAiring = async (page: number = 1, type?: number) => {
+export const getTopAiring = async (
+  page: number | string = 1,
+  type?: number
+) => {
   try {
-    let opts = [page, type];
+    let opts = [+page, type];
 
     let cachedTop = await redis.get(animeKeys.topAir + page);
     let animes: ISearch<IAnimeResult>;
