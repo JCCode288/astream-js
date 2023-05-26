@@ -1,5 +1,5 @@
 import { searchAnime } from "@/actions";
-import { AniSearch } from "@/components";
+import { AniSearch, Animation } from "@/components";
 import { IAnimeResult } from "@consumet/extensions";
 
 export default async function SearchPage({
@@ -24,8 +24,10 @@ export default async function SearchPage({
   }
 
   return (
-    <div className="justify-center px-4 sm:mx-auto flex">
-      <AniSearch animes={searched} />
-    </div>
+    <Animation>
+      <div className="justify-center px-4 sm:mx-auto flex">
+        <AniSearch animes={searched} />
+      </div>
+    </Animation>
   );
 }

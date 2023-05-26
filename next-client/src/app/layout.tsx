@@ -1,4 +1,4 @@
-import { Footer, Navbar } from "@/components";
+import { Animation, Footer, Navbar } from "@/components";
 import "./globals.css";
 import "swiper/css";
 import "swiper/css/effect-flip";

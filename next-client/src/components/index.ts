@@ -12,3 +12,4 @@ export { default as EpisodeBtn } from "./DetailEpisodeBtn";
 export { default as BackBtn } from "./ButtonBack";
 export { default as AniSearch } from "./SearchCarousel";
 export { default as MainPagination } from "./BasePagination";
+export { default as Animation } from "./AnimationWrapper";

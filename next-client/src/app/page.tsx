@@ -1,5 +1,5 @@
 import { getRecentAnime, getTopAiring } from "@/actions";
-import { AniCard, AniCarousel, MainPagination } from "@/components";
+import { AniCard, AniCarousel, Animation, MainPagination } from "@/components";
 import { notFound } from "next/navigation";
 
 export default async function Home({ searchParams }: { searchParams: any }) {
@@ -13,7 +13,7 @@ export default async function Home({ searchParams }: { searchParams: any }) {
   }
 
   return (
-    <>
+    <Animation>
       <h1 className="mx-4 my-2 text-3xl font-semibold border-2 w-fit px-4 py-2 border-accent-focus rounded-sm">
         Top Airing Anime
       </h1>
@@ -30,6 +30,6 @@ export default async function Home({ searchParams }: { searchParams: any }) {
         ))}
       </main>
       <MainPagination page={page} baseUrl="" />
-    </>
+    </Animation>
   );
 }
