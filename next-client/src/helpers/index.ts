@@ -36,7 +36,16 @@ export const handleTitle = (anime: IAnimeResult) => {
   let titleSplitted = title.split(" ");
 
   if (titleSplitted.length > 8) {
-    return titleSplitted.join("\n");
+    let result = "";
+    for (const el of titleSplitted) {
+      if (el.match(/^(no|ni|to|wa|wo|ga|mo)$/i)) {
+        result += `${el} `;
+      } else {
+        result += `${el}\n`;
+      }
+    }
+
+    return result;
   } else if (titleSplitted.length > 6) {
     let result = "";
     for (let i = 0; i <= titleSplitted.length; i++) {
