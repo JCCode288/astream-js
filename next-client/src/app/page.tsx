@@ -1,13 +1,15 @@
 import { getRecentAnime, getTopAiring } from "@/actions";
-import { AniCard, AniCarousel } from "@/components";
+import { AniCard, AniCarousel, MainPagination } from "@/components";
 import { notFound } from "next/navigation";
 
-export default async function Home() {
+export default async function Home({ searchParams }: { searchParams: any }) {
   let animesTop = await getTopAiring();
-  let animesRecent = await getRecentAnime();
+
+  let page = searchParams?.page;
+  let animesRecent = await getRecentAnime(page);
 
   if (!animesTop.length || !animesRecent.length) {
-    return notFound();
+    notFound();
   }
 
   return (
@@ -27,6 +29,7 @@ export default async function Home() {
           <AniCard key={anime.id} anime={anime} />
         ))}
       </main>
+      <MainPagination page={page} />
     </>
   );
 }
