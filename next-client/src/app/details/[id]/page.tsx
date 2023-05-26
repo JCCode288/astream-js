@@ -47,7 +47,7 @@ export default async function DetailPage({ params }: any) {
       </div>
       <div className="divider"></div>
       <div className="flex flex-wrap gap-y-4 justify-evenly px-2 sm:px-4 sm:pb-4 max-h-[70vh] overflow-y-auto">
-        {animeDetail.episodes ? (
+        {animeDetail.episodes?.length ? (
           animeDetail.episodes?.reverse().map((episode) => {
             let title: string = episodeTitle(episode.id);
             return (

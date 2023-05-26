@@ -216,7 +216,9 @@ export const getPrevNextEpisodes = async (episodeId: string) => {
 
 export const getAnimesByGenres = async (genres: string, page: number = 1) => {
   try {
-    let cachedAniGenres = await redis.get(animeKeys.aniGenres + genres);
+    let cachedAniGenres = await redis.get(
+      `${animeKeys.aniGenres}${genres}/${page}`
+    );
     let aniGenres: ISearch<IAnimeResult>;
 
     if (cachedAniGenres) {
@@ -226,7 +228,7 @@ export const getAnimesByGenres = async (genres: string, page: number = 1) => {
 
     aniGenres = await animeProvider.fetchGenreInfo(genres, +page);
     await redis.set(
-      animeKeys.aniGenres + genres,
+      `${animeKeys.aniGenres}${genres}/${page}`,
       JSON.stringify(aniGenres),
       "EX",
       60 * 15

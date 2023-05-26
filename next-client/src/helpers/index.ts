@@ -8,7 +8,7 @@ export const parseTitle = (anime: IAnimeResult) => {
     title = anime.id
       .split("-")
       .map((el) => {
-        if (el.match(/(no|ni|to|wa|wo|ga|mo)/i)) {
+        if (el.match(/^(no|ni|to|wa|wo|ga|mo)$/i)) {
           return el;
         }
         return el.charAt(0).toUpperCase() + el.slice(1);
@@ -35,7 +35,9 @@ export const handleTitle = (anime: IAnimeResult) => {
 
   let titleSplitted = title.split(" ");
 
-  if (titleSplitted.length > 6) {
+  if (titleSplitted.length > 8) {
+    return titleSplitted.join("\n");
+  } else if (titleSplitted.length > 6) {
     let result = "";
     for (let i = 0; i <= titleSplitted.length; i++) {
       result += titleSplitted[i];
