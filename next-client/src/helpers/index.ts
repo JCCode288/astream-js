@@ -36,30 +36,25 @@ export const handleTitle = (anime: IAnimeResult) => {
   let titleSplitted = title.split(" ");
 
   if (titleSplitted.length > 8) {
-    let result = "";
-    for (const el of titleSplitted) {
-      if (el.match(/^(no|ni|to|wa|wo|ga|mo)$/i)) {
-        result += `${el} `;
-      } else {
-        result += `${el}\n`;
-      }
-    }
+    let first = titleSplitted.slice(0, 4);
+    let second = titleSplitted.slice(-3);
 
-    return result;
-  } else if (titleSplitted.length > 6) {
+    return `${first.join(" ")}\n ... ${second.join(" ")}`;
+  } else if (titleSplitted.length > 4) {
     let result = "";
+
     for (let i = 0; i <= titleSplitted.length; i++) {
       result += titleSplitted[i];
       if (i === titleSplitted.length - 1) {
         return result;
       }
-      if ((i + 1) % 4 === 0) {
+      if ((i + 1) % 3 === 0) {
         result += "\n";
       } else {
         result += " ";
       }
     }
-  } else if (titleSplitted.length > 3) {
+  } else if (titleSplitted.length > 2) {
     let [first, second, ...rest]: string[] = titleSplitted;
 
     return `${first} ${second}\n${rest.join(" ")}`;
