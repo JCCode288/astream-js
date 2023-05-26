@@ -3,14 +3,17 @@
 import Link from "next/link";
 export default function MainPagination({
   page,
+  baseUrl,
 }: {
   page: number | string | undefined;
+  baseUrl: string;
 }) {
   page = page || 1;
+
   return (
     <div className="flex justify-center gap-4 py-4">
       {+page > 1 ? (
-        <Link href={`/?page=${+page - 1}`}>
+        <Link href={`${baseUrl}/?page=${+page - 1}`}>
           <img
             width="64"
             height="64"
@@ -22,7 +25,8 @@ export default function MainPagination({
       ) : (
         ""
       )}
-      <Link href={`/?page=${+page + 1}`}>
+
+      <Link href={`${baseUrl}/?page=${+page + 1}`}>
         <img
           width="64"
           height="64"

@@ -29,7 +29,7 @@ export default async function Home({ searchParams }: { searchParams: any }) {
           <AniCard key={anime.id} anime={anime} />
         ))}
       </main>
-      <MainPagination page={page} />
+      <MainPagination page={page} baseUrl="" />
     </>
   );
 }

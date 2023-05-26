@@ -18,8 +18,8 @@ export default function BaseCard({ anime }: any) {
       </Link>
       <div className="card-body items-center text-center">
         <div className="flex flex-wrap max-w-xs">
-          <p className="card-title">{`${parseTitle(anime)} - ${
-            anime.episodeNumber
+          <p className="card-title">{`${parseTitle(anime)} ${
+            anime.episodeNumber ? `- ${anime.episodeNumber}` : ""
           }`}</p>
         </div>
         <div className="card-actions">
