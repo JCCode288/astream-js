@@ -4,7 +4,7 @@ import { Dispatch, SetStateAction } from "react";
 export const parseTitle = (anime: IAnimeResult) => {
   let title: string = anime.title.toString();
 
-  if (!title) {
+  if (!title || title.match(/([email protected])/i)) {
     title = anime.id
       .split("-")
       .map((el) => {

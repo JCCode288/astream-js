@@ -1,5 +1,5 @@
 import { getAnimesByGenres } from "@/actions";
-import { notFound } from "next/navigation";
+import { AniCard } from "@/components";
 
 export default async function GenresPage({
   params,
@@ -16,7 +16,20 @@ export default async function GenresPage({
 
   let page = searchParams.page || 1;
 
-  let animes = await getAnimesByGenres(genres, page);
+  let aniGenres = await getAnimesByGenres(genres, page);
 
-  return <div>{JSON.stringify(animes)}</div>;
+  let animes = aniGenres.results;
+
+  return (
+    <div className="my-4">
+      <h1 className="mx-4 my-2 text-3xl font-semibold border-2 w-fit px-4 py-2 border-accent-focus rounded-sm">
+        {genres}
+      </h1>
+      <div className="flex flex-row flex-wrap gap-x-4 gap-y-6 justify-center">
+        {animes.map((anime) => {
+          return <AniCard anime={anime} />;
+        })}
+      </div>
+    </div>
+  );
 }
