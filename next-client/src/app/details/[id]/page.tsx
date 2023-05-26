@@ -37,8 +37,8 @@ export default async function DetailPage({ params }: any) {
             </p>
             <div className="gap-2 flex flex-wrap">
               {animeDetail.genres?.map((genre, idx) => (
-                <Link href={"/genres/" + genre}>
-                  <GenreBtn genre={genre} key={idx} />
+                <Link key={idx} href={"/genres/" + genre}>
+                  <GenreBtn genre={genre} />
                 </Link>
               ))}
             </div>
