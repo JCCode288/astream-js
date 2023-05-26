@@ -22,7 +22,7 @@ export default async function StreamPage({ params }: any) {
         </div>
       </div>
       <StreamContainer links={streamLinks} />
-      <div className="btn-group self-center">
+      <div className="btn-group self-center gap-2">
         {prev ? (
           <Link href={`/stream/${prev?.id}`}>
             <ButtonCTA title="Prev" shadow="small" />
