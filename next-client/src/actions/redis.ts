@@ -9,8 +9,8 @@ if (
 }
 
 const config = {
-  port: Number(process.env.REDIS_PORT) || 6379, // Redis port
-  host: process.env.REDIS_HOST || "127.0.0.1", // Redis host
+  port: Number(process.env.REDIS_PORT) || 6379,
+  host: process.env.REDIS_HOST || "127.0.0.1",
   password: process.env.REDIS_PASSWORD || "",
 };
 
