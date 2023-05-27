@@ -17,3 +17,11 @@ const config = {
 const redis = new Redis(config);
 
 export default redis;
+
+export const REDIS_RECENT = "animes/recent/";
+export const REDIS_TOPAIR = "animes/topAiring/";
+export const REDIS_DETAILS = "animes/details/";
+export const REDIS_SEARCH = "animes/search/";
+export const REDIS_PREVNEXT = "animes/animeId/";
+export const REDIS_STREAM = "animes/stream/";
+export const REDIS_GENRES = "animes/byGenres/";
