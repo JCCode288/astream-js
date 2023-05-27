@@ -4,23 +4,25 @@ import { MutableRefObject, useEffect, useMemo, useRef, useState } from "react";
 import BtnProvider from "./ButtonProvider";
 
 export default function StreamContainer({ links }: any) {
-  let allProvider: string[] = useMemo(() => {
-    return links.map((el: any) => el.name);
-  }, [links]);
-
   let [provider, setProvider] = useState(0);
-
-  let usedProvider: string = useMemo(() => {
-    return links[provider]?.url;
-  }, [provider]);
 
   let iframeRef: MutableRefObject<HTMLIFrameElement | null> = useRef(null);
 
   useEffect(() => {
     if (iframeRef.current) {
+      let cachedProvider = JSON.parse(localStorage.streamProvider);
+
+      setProvider(cachedProvider.idx);
+
       iframeRef.current.scrollIntoView({ behavior: "smooth" });
     }
   }, [iframeRef]);
+
+  let usedProvider: string = useMemo(() => {
+    return links[provider]?.url || links[0]?.url;
+  }, [provider]);
+
+  let allProvider: string[] = links.map((el: any) => el.name);
 
   return (
     <div className="flex flex-col justify-center items-center px-4 sm:px-0">
