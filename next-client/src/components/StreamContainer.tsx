@@ -10,11 +10,13 @@ export default function StreamContainer({ links }: any) {
 
   useEffect(() => {
     if (iframeRef.current) {
+      iframeRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+
+    if (localStorage.streamProvider) {
       let cachedProvider = JSON.parse(localStorage.streamProvider);
 
       setProvider(cachedProvider.idx);
-
-      iframeRef.current.scrollIntoView({ behavior: "smooth" });
     }
   }, [iframeRef]);
 
