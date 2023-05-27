@@ -98,7 +98,7 @@ export const getAnimeStream = async (episodeId: string) => {
       REDIS_STREAM + episodeId,
       JSON.stringify(streamLinks),
       "EX",
-      60 * 60 * 24 * 7
+      60 * 60 * 24 * 4
     );
 
     return streamLinks;
