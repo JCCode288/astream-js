@@ -11,6 +11,7 @@ export default function BaseCard({ anime }: any) {
         <figure>
           <img
             className="object-fill h-[60vh] w-auto"
+            loading="lazy"
             src={anime.image}
             alt="Shoes"
           />

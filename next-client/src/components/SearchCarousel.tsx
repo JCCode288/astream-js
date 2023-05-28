@@ -8,7 +8,7 @@ import CarouselCard from "./CarouselCard";
 import { slideResponsive } from "@/helpers";
 
 export default function SearchCarousel({ animes }: any) {
-  const [windowSize, setWindowSize] = useState(0);
+  const [windowSize, setWindowSize] = useState(1);
 
   useEffect(() => {
     window.addEventListener("resize", () => slideResponsive(setWindowSize));
@@ -26,7 +26,7 @@ export default function SearchCarousel({ animes }: any) {
       <Swiper
         className="h-full"
         modules={[Pagination]}
-        pagination={{ clickable: true }}
+        pagination={{ clickable: true, dynamicBullets: true }}
         slidesPerView={windowSize}
         spaceBetween={20}
       >
@@ -36,6 +36,7 @@ export default function SearchCarousel({ animes }: any) {
             key={anime.id}
           >
             <CarouselCard anime={anime} />
+            <div className="swiper-lazy-preloader swiper-lazy-preloader-white"></div>
           </SwiperSlide>
         ))}
       </Swiper>

@@ -9,6 +9,8 @@ export default function AniCarousel({ animes }: any) {
   return (
     <div className="swiper-container w-full py-4 px-8">
       <Swiper
+        initialSlide={0}
+        loop={true}
         modules={[EffectFlip, Pagination]}
         effect="flip"
         pagination={{ clickable: true }}
