@@ -6,7 +6,7 @@ import { parseTitle } from "../helpers";
 
 export default function BaseCard({ anime }: any) {
   return (
-    <div className="card border-[3px] shadow-sm shadow-primary-focus rounded-lg border-primary items-stretch justify-center bg-base-200 align-middle text-base-content hover:shadow-primary-content hover:shadow-md ease-in-out duration-200 w-fit">
+    <div className="card border-[3px] shadow-sm shadow-primary-focus rounded-lg border-primary items-stretch justify-center bg-base-200 align-middle text-base-content hover:shadow-primary-content hover:shadow-md ease-in-out duration-200 w-fit h-full">
       <Link href={`/details/${anime.id}`}>
         <figure className="h-[60vh] w-[45vh]">
           <img

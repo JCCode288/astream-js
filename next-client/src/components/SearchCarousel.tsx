@@ -7,6 +7,7 @@ import { useState } from "react";
 import CarouselCard from "./CarouselCard";
 import { slideResponsive } from "@/helpers";
 import { useRouter } from "next/navigation";
+import { Animation } from ".";
 
 export default function SearchCarousel({ animes, params }: any) {
   const [windowSize, setWindowSize] = useState(3);
@@ -59,8 +60,10 @@ export default function SearchCarousel({ animes, params }: any) {
             className="h-full text-center py-6 sm:pl-7 pl-4"
             key={anime.id}
           >
-            <CarouselCard anime={anime} />
-            <div className="swiper-lazy-preloader swiper-lazy-preloader-white"></div>
+            <Animation type="linear">
+              <CarouselCard anime={anime} />
+              <div className="swiper-lazy-preloader swiper-lazy-preloader-white"></div>
+            </Animation>
           </SwiperSlide>
         ))}
       </Swiper>
