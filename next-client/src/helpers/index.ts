@@ -2,13 +2,13 @@ import { IAnimeResult } from "@consumet/extensions";
 import { Dispatch, SetStateAction } from "react";
 
 export const parseTitle = (anime: IAnimeResult) => {
-  let title: string = anime.title.toString();
+  let title: string = `${anime.title}`;
 
-  if (!title || title.match(/([email protected])/i)) {
+  if (!title || /([email protected])/i.test(title)) {
     title = anime.id
       .split("-")
       .map((el) => {
-        if (el.match(/^(no|ni|to|wa|wo|ga|mo)$/i)) {
+        if (/^(no|ni|to|wa|wo|ga|mo|de|da)$/i.test(el)) {
           return el;
         }
         return el.charAt(0).toUpperCase() + el.slice(1);
