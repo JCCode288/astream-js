@@ -35,7 +35,7 @@ export default function Navbar() {
         <Link
           href={"/"}
           className={
-            "btn  rounded-sm btn-ghost normal-case text-3xl text-accent-content shadow-sm shadow-accent-focus border-2 border-accent-focus hover:border-accent-focus hover:border-2 hover:shadow-accent-content " +
+            "btn  rounded-md btn-ghost normal-case text-3xl text-accent-content shadow-sm shadow-accent-focus border-2 border-accent-focus hover:border-accent-focus hover:border-2 hover:shadow-accent-content " +
             notoSansJP.className
           }
         >
