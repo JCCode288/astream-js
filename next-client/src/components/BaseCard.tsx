@@ -6,11 +6,11 @@ import { parseTitle } from "../helpers";
 
 export default function BaseCard({ anime }: any) {
   return (
-    <div className="card border-[3px] shadow-sm shadow-primary-focus rounded-sm border-primary items-stretch justify-center bg-base-200 align-middle text-base-content hover:shadow-primary-content hover:shadow-md ease-in-out duration-200 w-[25vw]">
+    <div className="card border-[3px] shadow-sm shadow-primary-focus rounded-lg border-primary items-stretch justify-center bg-base-200 align-middle text-base-content hover:shadow-primary-content hover:shadow-md ease-in-out duration-200 w-fit">
       <Link href={`/details/${anime.id}`}>
-        <figure>
+        <figure className="h-[60vh] w-[45vh]">
           <img
-            className="object-fill h-[60vh] w-auto"
+            className="object-cover w-full h-full"
             loading="lazy"
             src={anime.image}
             alt="Shoes"
@@ -18,8 +18,8 @@ export default function BaseCard({ anime }: any) {
         </figure>
       </Link>
       <div className="card-body flex justify-between p-4">
-        <div className="flex flex-wrap whitespace-normal">
-          <p className="card-title justify-center w-auto">{`${parseTitle(
+        <div className="flex ">
+          <p className="card-title justify-center flex-wrap w-36">{`${parseTitle(
             anime
           )} ${anime.episodeNumber ? `- ${anime.episodeNumber}` : ""}`}</p>
         </div>

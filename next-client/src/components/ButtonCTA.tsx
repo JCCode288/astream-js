@@ -19,7 +19,7 @@ export default function ButtonCTA({ title, actions, shadow }: any) {
   return (
     <button
       onClick={actions}
-      className={"btn btn-accent btn-outline rounded-sm " + shadow}
+      className={"btn btn-accent btn-outline rounded-md " + shadow}
     >
       {title}
     </button>
