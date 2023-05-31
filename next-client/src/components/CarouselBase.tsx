@@ -8,8 +8,8 @@ import { useEffect, useState } from "react";
 import { getTopAiring } from "@/actions";
 import { Animation, Loading } from ".";
 
-export default function AniCarousel({ animes }: any) {
-  let [animesState, setAnimesState] = useState(animes);
+export default function AniCarousel() {
+  let [animesState, setAnimesState]: any = useState([]);
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
 
@@ -46,20 +46,22 @@ export default function AniCarousel({ animes }: any) {
 
   return (
     <div className="swiper-container w-full py-4 px-8 ">
-      <Swiper
-        initialSlide={0}
-        modules={[EffectFlip, Pagination]}
-        effect="flip"
-        pagination={{ clickable: true }}
-        slidesPerView={1}
-        onTouchEnd={(swiper) => handlePagination(swiper)}
-      >
-        {animesState.map((anime: IAnimeResult | any) => (
-          <SwiperSlide key={anime.id}>
-            <CarouselCard anime={anime} />
-          </SwiperSlide>
-        ))}
-      </Swiper>
+      <Animation>
+        <Swiper
+          initialSlide={0}
+          modules={[EffectFlip, Pagination]}
+          effect="flip"
+          pagination={{ clickable: true }}
+          slidesPerView={1}
+          onTouchEnd={(swiper) => handlePagination(swiper)}
+        >
+          {animesState.map((anime: IAnimeResult | any) => (
+            <SwiperSlide key={anime.id}>
+              <CarouselCard anime={anime} />
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      </Animation>
     </div>
   );
 }
