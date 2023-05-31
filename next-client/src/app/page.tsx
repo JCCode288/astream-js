@@ -5,10 +5,9 @@ import { notFound } from "next/navigation";
 export default async function Home({ searchParams }: { searchParams: any }) {
   let page = searchParams?.page;
 
-  let animesTop = await getTopAiring();
   let animesRecent = await getRecentAnime(page);
 
-  if (!animesTop.length || !animesRecent.length) {
+  if (!animesRecent.length) {
     notFound();
   }
 
@@ -17,11 +16,9 @@ export default async function Home({ searchParams }: { searchParams: any }) {
       <h1 className="mx-4 my-2 text-3xl font-semibold border-2 w-fit px-4 py-2 border-accent-focus rounded-sm">
         Top Airing Anime
       </h1>
-      <Animation>
-        <main>
-          <AniCarousel animes={animesTop} />
-        </main>
-      </Animation>
+      <main>
+        <AniCarousel />
+      </main>
       <div className="divider"></div>
       <h1 className="mx-4 my-2 text-3xl font-semibold border-2 w-fit px-4 py-2 border-accent-focus rounded-sm">
         Recent Anime
