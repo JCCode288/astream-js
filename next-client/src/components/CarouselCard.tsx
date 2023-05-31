@@ -1,7 +1,9 @@
+"use client";
+
 import { handleTitle, parseTitle } from "@/helpers";
 import { IAnimeResult } from "@consumet/extensions";
 import Link from "next/link";
-
+import { Animation } from ".";
 export default function CarouselCard({ anime }: { anime: IAnimeResult }) {
   return (
     <div className="flex align-middle justify-center sm:mt-0 mt-2">

@@ -22,7 +22,7 @@ export default function StreamContainer({ links }: any) {
 
   let usedProvider: string = useMemo(() => {
     return links[provider]?.url || links[0]?.url;
-  }, [provider]);
+  }, [provider, links]);
 
   let allProvider: string[] = links.map((el: any) => el.name);
 

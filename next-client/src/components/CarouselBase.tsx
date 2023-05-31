@@ -6,7 +6,7 @@ import { IAnimeResult } from "@consumet/extensions";
 import CarouselCard from "./CarouselCard";
 import { useEffect, useState } from "react";
 import { getTopAiring } from "@/actions";
-import { Loading } from ".";
+import { Animation, Loading } from ".";
 
 export default function AniCarousel({ animes }: any) {
   let [animesState, setAnimesState] = useState(animes);
