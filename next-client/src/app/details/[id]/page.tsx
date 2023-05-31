@@ -55,12 +55,11 @@ export default async function DetailPage({ params }: any) {
           {animeDetail.episodes?.length ? (
             animeDetail.episodes?.reverse().map((episode, idx) => {
               let title: string = episodeTitle(episode.id);
-              let types = ["spring", "linear"];
               return (
                 <Animation
-                  type={Math.floor(Math.random() * types.length)}
+                  type="linear"
                   key={episode.number}
-                  duration={Math.random() * 2}
+                  duration={(idx + 1) * 0.2}
                 >
                   <EpisodeBtn title={title} id={episode.id} />
                 </Animation>
