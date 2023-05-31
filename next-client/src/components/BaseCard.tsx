@@ -17,13 +17,13 @@ export default function BaseCard({ anime }: any) {
           />
         </figure>
       </Link>
-      <div className="card-body items-center text-center">
-        <div className="flex flex-wrap max-w-xs">
-          <p className="card-title">{`${parseTitle(anime)} ${
-            anime.episodeNumber ? `- ${anime.episodeNumber}` : ""
-          }`}</p>
+      <div className="card-body flex justify-between p-4">
+        <div className="flex flex-wrap whitespace-normal">
+          <p className="card-title justify-center w-20">{`${parseTitle(
+            anime
+          )} ${anime.episodeNumber ? `- ${anime.episodeNumber}` : ""}`}</p>
         </div>
-        <div className="card-actions">
+        <div className="card-actions justify-center relative">
           <Link href={`/stream/${anime.episodeId}`}>
             <MainButton title="Watch Episode" shadow="small" />
           </Link>
