@@ -4,54 +4,45 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Swiper as SwiperClass, EffectFlip, Pagination } from "swiper";
 import { IAnimeResult } from "@consumet/extensions";
 import CarouselCard from "./CarouselCard";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { getTopAiring } from "@/actions";
+import { Loading } from ".";
 
 export default function AniCarousel({ animes }: any) {
   let [animesState, setAnimesState] = useState(animes);
-  const [swipeCount, setSwipeCount] = useState(0);
-  const page = useRef(1);
+  const [loading, setLoading] = useState(false);
+  const [page, setPage] = useState(1);
 
   const fetchAnimes = async () => {
     try {
-      let animesFetched = await getTopAiring(page.current);
+      setLoading(true);
+      let animesFetched = await getTopAiring(page);
       setAnimesState([...animesFetched]);
+      setLoading(false);
     } catch (err) {
-      console.log(err);
+      setLoading(false);
     }
   };
 
   useEffect(() => {
     fetchAnimes();
-  }, [page.current]);
+  }, [page]);
 
   const handlePagination = (swiper: SwiperClass) => {
     if (swiper.swipeDirection === "next" && swiper.isEnd) {
-      setSwipeCount((prev) => prev + 1);
-
-      if (swipeCount > 0) {
-        page.current = page.current + 1;
-        swiper.slideTo(0, 1500);
-
-        setSwipeCount(0);
-      }
+      setPage((page) => page + 1);
+      swiper.slideTo(1, 1500);
     }
-    if (
-      swiper.swipeDirection === "prev" &&
-      swiper.isBeginning &&
-      page.current > 1
-    ) {
-      console.log("masuk prev");
-      page.current = page.current - 1;
-      setSwipeCount((prev) => prev + 1);
+    if (swiper.swipeDirection === "prev" && swiper.isBeginning && page > 1) {
+      setPage((page) => page - 1);
 
-      if (swipeCount > 0) {
-        swiper.slideTo(0, 1500);
-
-        setSwipeCount(0);
-      }
+      swiper.slideTo(0, 1500);
     }
   };
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <div className="swiper-container w-full py-4 px-8">
