@@ -10,17 +10,6 @@ import { slideResponsive } from "@/helpers";
 export default function SearchCarousel({ animes }: any) {
   const [windowSize, setWindowSize] = useState(1);
 
-  useEffect(() => {
-    window.addEventListener("resize", () => slideResponsive(setWindowSize));
-
-    slideResponsive(setWindowSize);
-
-    return () =>
-      window.removeEventListener("resize", () =>
-        slideResponsive(setWindowSize)
-      );
-  }, []);
-
   return (
     <div className="swiper-container max-h-screen w-full">
       <Swiper
@@ -29,6 +18,9 @@ export default function SearchCarousel({ animes }: any) {
         pagination={{ clickable: true, dynamicBullets: true }}
         slidesPerView={windowSize}
         spaceBetween={20}
+        onResize={(swiper) => {
+          slideResponsive(setWindowSize);
+        }}
       >
         {animes.map((anime: IAnimeResult | any) => (
           <SwiperSlide
