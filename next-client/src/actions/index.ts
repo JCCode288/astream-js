@@ -136,9 +136,9 @@ export const getTopAiring = async (
   }
 };
 
-export const searchAnime = async (query: string) => {
+export const searchAnime = async (query: string, page: number) => {
   try {
-    let cachedSearch = await redis.get(REDIS_SEARCH + query);
+    let cachedSearch = await redis.get(REDIS_SEARCH + query + `/${page}`);
     let animes: ISearch<IAnimeResult>;
 
     if (cachedSearch) {
@@ -146,9 +146,9 @@ export const searchAnime = async (query: string) => {
       return animes.results;
     }
 
-    animes = await animeProvider.search(query);
+    animes = await animeProvider.search(query, page);
     await redis.set(
-      REDIS_SEARCH + query,
+      REDIS_SEARCH + `${query}/${page}`,
       JSON.stringify(animes),
       "EX",
       60 * 60 * 4

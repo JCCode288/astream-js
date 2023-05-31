@@ -14,6 +14,7 @@ export default function CarouselCard({ anime }: { anime: IAnimeResult }) {
         <img
           className="swiper-slide-img h-[60vh] sm:h-[73vh] rounded-sm border-[2px] shadow-md shadow-primary-focus border-primary cursor-pointer"
           src={anime.image}
+          loading="lazy"
           alt={parseTitle(anime)}
         />
       </Link>
