@@ -8,16 +8,20 @@ import { useEffect, useState } from "react";
 import { getTopAiring } from "@/actions";
 import { Animation, Loading } from ".";
 
-export default function AniCarousel() {
-  let [animesState, setAnimesState]: any = useState([]);
+export default function AniCarousel({ animes }: { animes: IAnimeResult[] }) {
+  let [animesState, setAnimesState]: any = useState(animes);
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
 
   const fetchAnimes = async () => {
     try {
       setLoading(true);
-      let animesFetched = await getTopAiring(page);
-      setAnimesState([...animesFetched]);
+      if (page > 1) {
+        let animesFetched = await getTopAiring(page);
+        setAnimesState([...animesFetched]);
+      } else {
+        setAnimesState(animes);
+      }
       setLoading(false);
     } catch (err) {
       setLoading(false);
