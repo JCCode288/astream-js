@@ -18,6 +18,7 @@ export default function AniCarousel({ animes }: { animes: IAnimeResult[] }) {
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
   const [onEdge, setOnEdge] = useState("Beginning");
+
   const message = useMemo(() => {
     if (onEdge === "Beginning") return "Slide Prev to Return";
     else if (onEdge === "End") return "Keep Slide Next to Next Top Airing";
@@ -64,11 +65,6 @@ export default function AniCarousel({ animes }: { animes: IAnimeResult[] }) {
       <Animation>
         <Swiper
           autoplay={{ delay: 3000 }}
-          className={
-            onEdge === "End" || (onEdge === "Beginning" && page > 1)
-              ? "sm:tooltip sm:tooltip-primary sm:tooltip-bottom"
-              : ""
-          }
           initialSlide={0}
           onBeforeTransitionStart={(swiper) => {
             if (swiper.isEnd) setOnEdge("End");
@@ -80,11 +76,19 @@ export default function AniCarousel({ animes }: { animes: IAnimeResult[] }) {
           pagination={{ clickable: true }}
           slidesPerView={1}
           onTouchEnd={(swiper) => handlePagination(swiper)}
-          data-tip={message}
         >
           {animesState.map((anime: IAnimeResult | any) => (
-            <SwiperSlide key={anime.id}>
+            <SwiperSlide
+              className={
+                onEdge === "End" || (onEdge === "Beginning" && page > 1)
+                  ? "tooltip tooltip-primary tooltip-bottom"
+                  : ""
+              }
+              data-tip={message}
+              key={anime.id}
+            >
               <CarouselCard anime={anime} />
+              <div></div>
             </SwiperSlide>
           ))}
         </Swiper>
