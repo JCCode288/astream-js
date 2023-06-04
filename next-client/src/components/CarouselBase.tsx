@@ -1,10 +1,15 @@
 "use client";
 
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Swiper as SwiperClass, EffectFlip, Pagination } from "swiper";
+import {
+  Swiper as SwiperClass,
+  EffectFlip,
+  Pagination,
+  Autoplay,
+} from "swiper";
 import { IAnimeResult } from "@consumet/extensions";
 import CarouselCard from "./CarouselCard";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { getTopAiring } from "@/actions";
 import { Animation, Loading } from ".";
 
@@ -12,6 +17,12 @@ export default function AniCarousel({ animes }: { animes: IAnimeResult[] }) {
   let [animesState, setAnimesState]: any = useState(animes);
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
+  const [onEdge, setOnEdge] = useState("Beginning");
+  const message = useMemo(() => {
+    if (onEdge === "Beginning") return "Slide Prev to Return";
+    else if (onEdge === "End") return "Keep Slide Next to Next Top Airing";
+    else return "";
+  }, [onEdge]);
 
   const fetchAnimes = async () => {
     try {
@@ -49,15 +60,27 @@ export default function AniCarousel({ animes }: { animes: IAnimeResult[] }) {
   }
 
   return (
-    <div className="swiper-container w-full py-4 px-8 ">
+    <div className="swiper-container w-full py-4 px-8">
       <Animation>
         <Swiper
+          autoplay={{ delay: 3000 }}
+          className={
+            onEdge === "End" || (onEdge === "Beginning" && page > 1)
+              ? "sm:tooltip sm:tooltip-primary sm:tooltip-bottom"
+              : ""
+          }
           initialSlide={0}
-          modules={[EffectFlip, Pagination]}
+          onBeforeTransitionStart={(swiper) => {
+            if (swiper.isEnd) setOnEdge("End");
+            else if (swiper.isBeginning) setOnEdge("Beginning");
+            else setOnEdge("Non");
+          }}
+          modules={[EffectFlip, Pagination, Autoplay]}
           effect="flip"
           pagination={{ clickable: true }}
           slidesPerView={1}
           onTouchEnd={(swiper) => handlePagination(swiper)}
+          data-tip={message}
         >
           {animesState.map((anime: IAnimeResult | any) => (
             <SwiperSlide key={anime.id}>
