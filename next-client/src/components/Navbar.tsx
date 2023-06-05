@@ -4,14 +4,24 @@ import Link from "next/link";
 
 import { Noto_Sans_JP } from "next/font/google";
 import { useRouter } from "next/navigation";
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useContext, useState } from "react";
+import { ThemeContext } from "@/providers/ThemeProvider";
+import ThemeSwap from "./ThemeSwap";
 
 const notoSansJP = Noto_Sans_JP({ weight: "600", subsets: ["latin"] });
 
 export default function Navbar() {
   const router = useRouter();
 
-  let [search, setSearch] = useState("");
+  const [theme, setTheme]: any = useContext(ThemeContext);
+
+  const [search, setSearch] = useState("");
+
+  const handleTheme = (e: any) => {
+    const { value } = e.target;
+    setTheme(value);
+    localStorage.theme = value;
+  };
 
   const handleSearch = (e: FormEvent) => {
     e.preventDefault();
@@ -32,28 +42,32 @@ export default function Navbar() {
   return (
     <div className="navbar bg-primary text-primary-content shadow-sm shadow-primary-focus py-4 sticky top-0 z-20">
       <div className="flex-1 gap-4 sm:justify-between">
-        <Link
-          href={"/"}
-          className={
-            "btn  rounded-md btn-ghost normal-case text-3xl text-accent-content shadow-sm shadow-accent-focus border-2 border-accent-focus hover:border-accent-focus hover:border-2 hover:shadow-accent-content " +
-            notoSansJP.className
-          }
-        >
-          <strong>アニStream</strong>
-        </Link>
-        <form
-          onSubmit={handleSearch}
-          className="flex form-control max-w-screen-sm"
-        >
-          <input
-            type="text"
-            placeholder="Search"
-            className="input text-accent input-bordered w-full focus:border-primary-focus border-2 rounded-[5px]"
-            value={search}
-            onChange={inputChange}
-          />
-        </form>
+        <div className="flex flex-row gap-2 align-middle">
+          <Link
+            href={"/"}
+            className={
+              "btn  rounded-md btn-ghost normal-case text-3xl text-accent-content shadow-sm shadow-accent-focus border-2 border-accent-focus hover:border-accent-focus hover:border-2 hover:shadow-accent-content " +
+              notoSansJP.className
+            }
+          >
+            <strong>アニStream</strong>
+          </Link>
+          <ThemeSwap handleTheme={handleTheme} theme={theme} />
+        </div>
       </div>
+
+      <form
+        onSubmit={handleSearch}
+        className="flex form-control max-w-screen-sm"
+      >
+        <input
+          type="text"
+          placeholder="Search"
+          className="input text-accent input-bordered w-full focus:border-primary-focus border-2 rounded-[5px]"
+          value={search}
+          onChange={inputChange}
+        />
+      </form>
     </div>
   );
 }
