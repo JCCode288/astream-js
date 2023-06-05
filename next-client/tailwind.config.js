@@ -17,7 +17,7 @@ module.exports = {
     themes: [
       {
         night: {
-          ...require("daisyui/src/colors/themes")["[data-theme=night]"],
+          ...require("daisyui/src/theming/themes")["[data-theme=night]"],
           primary: "#BAFCA2",
           "primary-focus": "#6F9761",
           "primary-content": "#253220",
