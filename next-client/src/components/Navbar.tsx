@@ -41,12 +41,12 @@ export default function Navbar() {
 
   return (
     <div className="navbar bg-primary text-primary-content shadow-sm shadow-primary-focus py-4 sticky top-0 z-20">
-      <div className="flex-1 gap-4 sm:justify-between">
-        <div className="flex flex-row gap-2 align-middle">
+      <div className="flex-1 gap-4 justify-between">
+        <div className="flex w-fit flex-row gap-2">
           <Link
             href={"/"}
             className={
-              "btn  rounded-md btn-ghost normal-case text-3xl text-accent-content shadow-sm shadow-accent-focus border-2 border-accent-focus hover:border-accent-focus hover:border-2 hover:shadow-accent-content " +
+              "btn rounded-md btn-ghost normal-case text-3xl text-accent-content shadow-sm shadow-accent-focus border-2 border-accent-focus hover:border-accent-focus hover:border-2 hover:shadow-accent-content " +
               notoSansJP.className
             }
           >
@@ -54,20 +54,17 @@ export default function Navbar() {
           </Link>
           <ThemeSwap handleTheme={handleTheme} theme={theme} />
         </div>
-      </div>
 
-      <form
-        onSubmit={handleSearch}
-        className="flex form-control max-w-screen-sm"
-      >
-        <input
-          type="text"
-          placeholder="Search"
-          className="input text-accent input-bordered w-full focus:border-primary-focus border-2 rounded-[5px]"
-          value={search}
-          onChange={inputChange}
-        />
-      </form>
+        <form onSubmit={handleSearch} className="flex form-control w-auto">
+          <input
+            type="text"
+            placeholder="Search"
+            className="flex input text-accent input-bordered focus:border-primary-focus border-2 rounded-[5px] w-28 sm:w-auto"
+            value={search}
+            onChange={inputChange}
+          />
+        </form>
+      </div>
     </div>
   );
 }
