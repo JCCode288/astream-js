@@ -3,6 +3,7 @@ import "./globals.css";
 import "swiper/css/bundle";
 
 import { Montserrat } from "next/font/google";
+import MainProvider from "@/providers/MainProvider";
 
 const montserrat = Montserrat({ subsets: ["latin"] });
 
@@ -38,9 +39,11 @@ export default function RootLayout({
       <body
         className={`${montserrat.className} text-accent w-screen sm:w-full`}
       >
-        <Navbar />
-        {children}
-        <Footer />
+        <MainProvider>
+          <Navbar />
+          {children}
+          <Footer />
+        </MainProvider>
       </body>
     </html>
   );
