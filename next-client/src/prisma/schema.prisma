@@ -1,0 +1,42 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id         Int        @id @unique @default(autoincrement())
+  username   String     @unique
+  email      String     @unique
+  password   String
+  created_at DateTime   @default(now())
+  updated_at DateTime   @default(now())
+  Watching   Watching[]
+}
+
+model Watching {
+  id             Int       @id @unique @default(autoincrement())
+  episode_title  String    @unique
+  episode_number Int
+  user           User?     @relation(fields: [user_id], references: [id])
+  user_id        Int?      @unique
+  created_at     DateTime  @default(now())
+  updated_at     DateTime  @default(now())
+  comment        Comment[]
+}
+
+model Comment {
+  id         Int       @id @unique @default(autoincrement())
+  comment    String
+  rating     Int?
+  created_at DateTime  @default(now())
+  updated_at DateTime  @default(now())
+  Watching   Watching? @relation(fields: [watchingId], references: [id])
+  watchingId Int?
+}

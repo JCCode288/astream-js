@@ -1,5 +1,6 @@
-import { getRecentAnime, getTopAiring } from "@/actions";
+import { findUser, getRecentAnime, getTopAiring } from "@/actions";
 import { AniCard, AniCarousel, Animation, MainPagination } from "@/components";
+
 import { notFound } from "next/navigation";
 
 export default async function Home({ searchParams }: { searchParams: any }) {
