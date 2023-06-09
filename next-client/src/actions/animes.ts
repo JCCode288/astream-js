@@ -16,6 +16,7 @@ import redis, {
   REDIS_STREAM,
   REDIS_TOPAIR,
 } from "./redis";
+import { episodeTitle, parseTitle } from "@/helpers";
 
 const animeProvider = new ANIME.Gogoanime();
 
@@ -39,7 +40,14 @@ export const getRecentAnime = async (page: number = 1, type?: number) => {
       60 * 15
     );
 
-    return animes.results;
+    const parsedAnimes = animes.results.map((anime) => {
+      let title = parseTitle(anime);
+      anime.title = title;
+
+      return anime;
+    });
+
+    return parsedAnimes;
   } catch (err) {
     throw err;
   }
@@ -66,6 +74,12 @@ export const getAnimeDetail = async (id: string) => {
       "EX",
       60 * 15
     );
+
+    animeInfo.title = parseTitle(animeInfo);
+    animeInfo.episodes = animeInfo.episodes?.map((anime) => {
+      anime.title = episodeTitle(anime.id);
+      return anime;
+    });
 
     return animeInfo;
   } catch (err) {
@@ -129,7 +143,14 @@ export const getTopAiring = async (
       60 * 60 * 24
     );
 
-    return animes.results;
+    const parsedAnimes = animes.results.map((anime) => {
+      let title = parseTitle(anime);
+      anime.title = title;
+
+      return anime;
+    });
+
+    return parsedAnimes;
   } catch (err) {
     throw err;
   }
@@ -153,7 +174,14 @@ export const searchAnime = async (query: string, page: number) => {
       60 * 60 * 4
     );
 
-    return animes.results;
+    const parsedAnimes = animes.results.map((anime) => {
+      let title = parseTitle(anime);
+      anime.title = title;
+
+      return anime;
+    });
+
+    return parsedAnimes;
   } catch (err) {
     throw err;
   }
@@ -228,6 +256,13 @@ export const getAnimesByGenres = async (genres: string, page: number = 1) => {
       "EX",
       60 * 15
     );
+
+    aniGenres.results = aniGenres.results.map((anime) => {
+      let title = parseTitle(anime);
+      anime.title = title;
+
+      return anime;
+    });
 
     return aniGenres;
   } catch (err) {

@@ -19,9 +19,9 @@ export default function BaseCard({ anime }: any) {
       </Link>
       <div className="card-body flex justify-between p-4">
         <div className="flex ">
-          <p className="card-title justify-center flex-wrap w-36">{`${parseTitle(
-            anime
-          )} ${anime.episodeNumber ? `- ${anime.episodeNumber}` : ""}`}</p>
+          <p className="card-title justify-center flex-wrap w-36">{`${
+            anime.title
+          } ${anime.episodeNumber ? `- ${anime.episodeNumber}` : ""}`}</p>
         </div>
         <div className="card-actions justify-center relative">
           <Link href={`/stream/${anime.episodeId}`}>

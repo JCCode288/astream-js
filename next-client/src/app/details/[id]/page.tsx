@@ -27,9 +27,7 @@ export default async function DetailPage({ params }: any) {
             />
           </div>
           <div>
-            <h1 className="text-5xl font-bold">{`${parseTitle(animeDetail)} ( ${
-              animeDetail.releaseDate
-            } )`}</h1>
+            <h1 className="text-5xl font-bold">{`${animeDetail.title} ( ${animeDetail.releaseDate} )`}</h1>
             <Animation>
               <p className="py-6">
                 {animeDetail?.description
