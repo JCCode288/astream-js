@@ -29,16 +29,15 @@ export const getRecentAnime = async (page: number = 1, type?: number) => {
 
     if (animesCached) {
       animes = JSON.parse(animesCached);
-      return animes.results;
+    } else {
+      animes = await animeProvider.fetchRecentEpisodes(...opts);
+      await redis.set(
+        REDIS_RECENT + animes.currentPage,
+        JSON.stringify(animes),
+        "EX",
+        60 * 15
+      );
     }
-
-    animes = await animeProvider.fetchRecentEpisodes(...opts);
-    await redis.set(
-      REDIS_RECENT + animes.currentPage,
-      JSON.stringify(animes),
-      "EX",
-      60 * 15
-    );
 
     const parsedAnimes = animes.results.map((anime) => {
       let title = parseTitle(anime);
@@ -64,16 +63,15 @@ export const getAnimeDetail = async (id: string) => {
 
     if (cachedDetail) {
       animeInfo = JSON.parse(cachedDetail);
-      return animeInfo;
+    } else {
+      animeInfo = await animeProvider.fetchAnimeInfo(id);
+      await redis.set(
+        REDIS_DETAILS + id,
+        JSON.stringify(animeInfo),
+        "EX",
+        60 * 15
+      );
     }
-
-    animeInfo = await animeProvider.fetchAnimeInfo(id);
-    await redis.set(
-      REDIS_DETAILS + id,
-      JSON.stringify(animeInfo),
-      "EX",
-      60 * 15
-    );
 
     animeInfo.title = parseTitle(animeInfo);
     animeInfo.episodes = animeInfo.episodes?.map((anime) => {
@@ -132,16 +130,15 @@ export const getTopAiring = async (
 
     if (cachedTop) {
       animes = JSON.parse(cachedTop);
-      return animes.results;
+    } else {
+      animes = await animeProvider.fetchTopAiring(...opts);
+      await redis.set(
+        REDIS_TOPAIR + animes.currentPage,
+        JSON.stringify(animes),
+        "EX",
+        60 * 60 * 24
+      );
     }
-
-    animes = await animeProvider.fetchTopAiring(...opts);
-    await redis.set(
-      REDIS_TOPAIR + animes.currentPage,
-      JSON.stringify(animes),
-      "EX",
-      60 * 60 * 24
-    );
 
     const parsedAnimes = animes.results.map((anime) => {
       let title = parseTitle(anime);
@@ -163,16 +160,15 @@ export const searchAnime = async (query: string, page: number) => {
 
     if (cachedSearch) {
       animes = JSON.parse(cachedSearch);
-      return animes.results;
+    } else {
+      animes = await animeProvider.search(query, page);
+      await redis.set(
+        REDIS_SEARCH + `${query}/${page}`,
+        JSON.stringify(animes),
+        "EX",
+        60 * 60 * 4
+      );
     }
-
-    animes = await animeProvider.search(query, page);
-    await redis.set(
-      REDIS_SEARCH + `${query}/${page}`,
-      JSON.stringify(animes),
-      "EX",
-      60 * 60 * 4
-    );
 
     const parsedAnimes = animes.results.map((anime) => {
       let title = parseTitle(anime);

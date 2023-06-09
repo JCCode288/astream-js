@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { MainButton } from ".";
-import { parseTitle } from "../helpers";
 
 export default function BaseCard({ anime }: any) {
   return (
