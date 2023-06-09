@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { ChangeEvent, FormEvent, useContext, useState } from "react";
 import { ThemeContext } from "@/providers/ThemeProvider";
 import ThemeSwap from "./ThemeSwap";
+import { useDebouncer } from "@/hooks/useDebouncer";
 
 const notoSansJP = Noto_Sans_JP({ weight: "600", subsets: ["latin"] });
 
@@ -23,20 +24,23 @@ export default function Navbar() {
     localStorage.theme = value;
   };
 
-  const handleSearch = (e: FormEvent) => {
-    e.preventDefault();
-
-    if (search) {
-      let params = search.replaceAll(" ", "-");
-
-      router.push("/search/" + params);
-    }
-  };
+  const searchDebounce = useDebouncer((val: string) => {
+    handleSearch(val);
+  }, 1500);
 
   const inputChange = (e: ChangeEvent) => {
     let { value }: any = e.target;
 
     setSearch(value);
+    searchDebounce(value);
+  };
+
+  const handleSearch = (val: string) => {
+    if (search) {
+      let params = val.replaceAll(" ", "-");
+
+      router.push("/search/" + params);
+    }
   };
 
   return (
