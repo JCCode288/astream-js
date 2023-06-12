@@ -26,8 +26,7 @@ export default function Navbar() {
 
   const searchDebounce = useDebouncer((val: string) => {
     handleSearch(val);
-    setSearch("");
-  }, 1100);
+  }, 1300);
 
   const inputChange = (e: ChangeEvent) => {
     let { value }: any = e.target;

@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 
-export const useDebouncer = (cb: any, delay: number = 1000) => {
+export const useDebouncer = (cb: any, delayMs: number = 1000) => {
   const [timeoutState, setTimeoutState]: [any, Dispatch<SetStateAction<any>>] =
     useState(null);
 
@@ -8,14 +8,14 @@ export const useDebouncer = (cb: any, delay: number = 1000) => {
     return () => {
       clearTimeout(timeoutState);
     };
-  }, [cb, delay]);
+  }, [cb, delayMs]);
 
   const callback = (...args: any) => {
     clearTimeout(timeoutState);
 
     const createdTimeout = setTimeout(() => {
       cb(...args);
-    }, delay);
+    }, delayMs);
 
     setTimeoutState(createdTimeout);
   };
