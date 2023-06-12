@@ -36,10 +36,12 @@ export default function Navbar() {
   };
 
   const handleSearch = (val: string) => {
-    if (search) {
+    if (val) {
       let params = val.replaceAll(" ", "-");
 
       router.push("/search/" + params);
+    } else {
+      router.push("/");
     }
   };
 
