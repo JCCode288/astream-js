@@ -7,6 +7,7 @@ interface ICommentDTO {
   comment: string;
   rating?: number;
   watching_id: number;
+  user_id: number;
 }
 
 export const createComment = async (commentData: ICommentDTO) => {

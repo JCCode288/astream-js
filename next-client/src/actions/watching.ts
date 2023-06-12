@@ -14,7 +14,6 @@ export const getWatchingById = async (animeId: string) => {
     where: { episode_title: animeId },
     include: {
       comments: true,
-      _count: { select: { comments: true } },
     },
   });
 
