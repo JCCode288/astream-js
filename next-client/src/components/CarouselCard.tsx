@@ -1,10 +1,9 @@
 "use client";
 
-import { handleTitle, parseTitle } from "@/helpers";
-import { IAnimeResult } from "@consumet/extensions";
+import { handleTitle } from "@/helpers";
 import Link from "next/link";
-import { Animation } from ".";
-export default function CarouselCard({ anime }: { anime: IAnimeResult }) {
+
+export default function CarouselCard({ anime }: { anime: any }) {
   return (
     <div className="flex align-middle justify-center sm:mt-0 mt-2">
       <div className="flex indicator h-full sm:pt-0 pt-4">
@@ -17,7 +16,7 @@ export default function CarouselCard({ anime }: { anime: IAnimeResult }) {
           className="swiper-slide-img h-[60vh] sm:h-[73vh] rounded-xl border-[2px] shadow-md shadow-primary-focus border-primary cursor-pointer object-cover object-center"
           src={anime.image}
           loading="lazy"
-          alt={parseTitle(anime)}
+          alt={anime?.title}
         />
       </Link>
     </div>

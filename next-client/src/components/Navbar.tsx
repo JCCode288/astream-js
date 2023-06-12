@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { ChangeEvent, FormEvent, useContext, useState } from "react";
 import { ThemeContext } from "@/providers/ThemeProvider";
 import ThemeSwap from "./ThemeSwap";
+import { useDebouncer } from "@/hooks/useDebouncer";
 
 const notoSansJP = Noto_Sans_JP({ weight: "600", subsets: ["latin"] });
 
@@ -23,24 +24,31 @@ export default function Navbar() {
     localStorage.theme = value;
   };
 
-  const handleSearch = (e: FormEvent) => {
-    e.preventDefault();
-
-    if (search) {
-      let params = search.replaceAll(" ", "-");
-
-      router.push("/search/" + params);
-    }
-  };
+  const searchDebounce = useDebouncer((val: string) => {
+    handleSearch(val);
+  }, 1300);
 
   const inputChange = (e: ChangeEvent) => {
     let { value }: any = e.target;
 
     setSearch(value);
+    searchDebounce(value);
   };
 
+  const handleSearch = (val: string) => {
+    if (search) {
+      let params = val.replaceAll(" ", "-");
+
+      router.push("/search/" + params);
+    }
+  };
+
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    handleSearch(search);
+  };
   return (
-    <div className="navbar bg-primary text-primary-content shadow-sm shadow-primary-focus py-4 sticky top-0 z-20">
+    <nav className="navbar bg-primary text-primary-content shadow-sm shadow-primary-focus py-4 sticky top-0 z-20">
       <div className="flex-1 gap-4 justify-between">
         <div className="flex w-fit flex-row gap-2">
           <Link
@@ -55,16 +63,18 @@ export default function Navbar() {
           <ThemeSwap handleTheme={handleTheme} theme={theme} />
         </div>
 
-        <form onSubmit={handleSearch} className="flex form-control w-auto">
-          <input
-            type="text"
-            placeholder="Search"
-            className="flex input text-accent input-bordered focus:border-primary-focus border-2 rounded-[5px] w-28 sm:w-auto"
-            value={search}
-            onChange={inputChange}
-          />
-        </form>
+        <div className="flex flex-auto justify-end">
+          <form onSubmit={handleSubmit} className="flex form-control w-auto">
+            <input
+              type="text"
+              placeholder="Search"
+              className="flex input text-accent input-bordered focus:border-primary-focus border-2 rounded-[5px] w-28 sm:w-auto"
+              value={search}
+              onChange={inputChange}
+            />
+          </form>
+        </div>
       </div>
-    </div>
+    </nav>
   );
 }
