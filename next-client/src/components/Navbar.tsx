@@ -40,6 +40,8 @@ export default function Navbar() {
       let params = val.replaceAll(" ", "-");
 
       router.push("/search/" + params);
+    } else {
+      router.push("/");
     }
   };
 
