@@ -2,6 +2,7 @@
 
 import { handleTitle } from "@/helpers";
 import Link from "next/link";
+
 export default function CarouselCard({ anime }: { anime: any }) {
   return (
     <div className="flex align-middle justify-center sm:mt-0 mt-2">

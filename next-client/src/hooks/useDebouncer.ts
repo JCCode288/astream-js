@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 
-export const useDebouncer = (cb: any, delay = 1000) => {
-  const [timeoutState, setTimeoutState]: any = useState(null);
+export const useDebouncer = (cb: any, delay: number = 1000) => {
+  const [timeoutState, setTimeoutState]: [any, Dispatch<SetStateAction<any>>] =
+    useState(null);
 
   useEffect(() => {
     return () => {

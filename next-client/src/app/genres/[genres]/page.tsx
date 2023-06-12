@@ -1,5 +1,18 @@
 import { getAnimesByGenres } from "@/actions";
 import { Animation, CarouselCard, MainPagination } from "@/components";
+import Errors from "@/helpers/Errors";
+
+async function fetchGenresPage(genres: string, page: number) {
+  try {
+    let aniGenres = await getAnimesByGenres(genres, page);
+
+    let animes = aniGenres.results;
+
+    return { animes };
+  } catch (err) {
+    console.log(err);
+  }
+}
 
 export default async function GenresPage({
   params,
@@ -16,9 +29,11 @@ export default async function GenresPage({
 
   let page = searchParams.page || 1;
 
-  let aniGenres = await getAnimesByGenres(genres, page);
+  let data = await fetchGenresPage(genres, page);
 
-  let animes = aniGenres.results;
+  if (!data) throw new Errors(500, "Something is wrong");
+
+  const { animes } = data;
 
   return (
     <div className="my-4 mx-8">

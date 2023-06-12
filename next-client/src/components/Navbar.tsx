@@ -26,7 +26,8 @@ export default function Navbar() {
 
   const searchDebounce = useDebouncer((val: string) => {
     handleSearch(val);
-  }, 1500);
+    setSearch("");
+  }, 1100);
 
   const inputChange = (e: ChangeEvent) => {
     let { value }: any = e.target;
@@ -43,8 +44,12 @@ export default function Navbar() {
     }
   };
 
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    handleSearch(search);
+  };
   return (
-    <div className="navbar bg-primary text-primary-content shadow-sm shadow-primary-focus py-4 sticky top-0 z-20">
+    <nav className="navbar bg-primary text-primary-content shadow-sm shadow-primary-focus py-4 sticky top-0 z-20">
       <div className="flex-1 gap-4 justify-between">
         <div className="flex w-fit flex-row gap-2">
           <Link
@@ -59,16 +64,18 @@ export default function Navbar() {
           <ThemeSwap handleTheme={handleTheme} theme={theme} />
         </div>
 
-        <form onSubmit={handleSearch} className="flex form-control w-auto">
-          <input
-            type="text"
-            placeholder="Search"
-            className="flex input text-accent input-bordered focus:border-primary-focus border-2 rounded-[5px] w-28 sm:w-auto"
-            value={search}
-            onChange={inputChange}
-          />
-        </form>
+        <div className="flex flex-auto justify-end">
+          <form onSubmit={handleSubmit} className="flex form-control w-auto">
+            <input
+              type="text"
+              placeholder="Search"
+              className="flex input text-accent input-bordered focus:border-primary-focus border-2 rounded-[5px] w-28 sm:w-auto"
+              value={search}
+              onChange={inputChange}
+            />
+          </form>
+        </div>
       </div>
-    </div>
+    </nav>
   );
 }

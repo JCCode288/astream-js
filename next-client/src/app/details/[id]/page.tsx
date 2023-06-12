@@ -1,12 +1,27 @@
 import { getAnimeDetail } from "@/actions";
 import { Animation, BackBtn, EpisodeBtn, GenreBtn } from "@/components";
-import { episodeTitle, parseTitle } from "@/helpers";
+import { episodeTitle } from "@/helpers";
+import Errors from "@/helpers/Errors";
 import Link from "next/link";
+
+async function fetchDetailPage(animeId: string) {
+  try {
+    let animeDetail = await getAnimeDetail(animeId);
+
+    return { animeDetail };
+  } catch (err) {
+    console.log(err);
+  }
+}
 
 export default async function DetailPage({ params }: any) {
   let animeId: string = params?.id;
 
-  let animeDetail = await getAnimeDetail(animeId);
+  let data = await fetchDetailPage(animeId);
+
+  if (!data) throw new Errors(500, "Something is wrong");
+
+  const { animeDetail } = data;
 
   return (
     <div className="flex items-center flex-col my-4 gap-2">

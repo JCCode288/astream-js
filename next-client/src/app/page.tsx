@@ -1,17 +1,32 @@
-import { findUser, getRecentAnime, getTopAiring } from "@/actions";
+import { findUsers, getRecentAnime, getTopAiring } from "@/actions";
 import { AniCard, AniCarousel, Animation, MainPagination } from "@/components";
+import Errors from "@/helpers/Errors";
 
 import { notFound } from "next/navigation";
+
+async function fetchMainPage(page: any) {
+  try {
+    let topAnimes = await getTopAiring();
+    let animesRecent = await getRecentAnime(page);
+
+    let users = await findUsers({});
+
+    if (!animesRecent.length) {
+      notFound();
+    }
+
+    return { topAnimes, animesRecent, users };
+  } catch (err) {}
+}
 
 export default async function Home({ searchParams }: { searchParams: any }) {
   let page = searchParams?.page;
 
-  let topAnimes = await getTopAiring();
-  let animesRecent = await getRecentAnime(page);
+  let data = await fetchMainPage(page);
 
-  if (!animesRecent.length) {
-    notFound();
-  }
+  if (!data) throw new Errors(500, "Something is wrong");
+
+  let { topAnimes, animesRecent, users } = data;
 
   return (
     <>

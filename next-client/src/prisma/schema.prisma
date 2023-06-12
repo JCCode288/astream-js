@@ -25,18 +25,18 @@ model Watching {
   episode_title  String    @unique
   episode_number Int
   user           User?     @relation(fields: [user_id], references: [id])
-  user_id        Int?      @unique
+  user_id        Int?
   created_at     DateTime  @default(now())
   updated_at     DateTime  @default(now())
-  comment        Comment[]
+  comments       Comment[]
 }
 
 model Comment {
-  id         Int       @id @unique @default(autoincrement())
-  comment    String
-  rating     Int?
-  created_at DateTime  @default(now())
-  updated_at DateTime  @default(now())
-  Watching   Watching? @relation(fields: [watchingId], references: [id])
-  watchingId Int?
+  id          Int       @id @unique @default(autoincrement())
+  comment     String
+  rating      Int?
+  created_at  DateTime  @default(now())
+  updated_at  DateTime  @default(now())
+  Watching    Watching? @relation(fields: [watching_id], references: [id])
+  watching_id Int?
 }
