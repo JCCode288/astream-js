@@ -1,15 +1,30 @@
 import { getAnimeStream, getPrevNextEpisodes } from "@/actions";
-import { Animation, BackBtn, StreamContainer } from "@/components";
+import { BackBtn, StreamContainer } from "@/components";
 import ButtonCTA from "@/components/ButtonCTA";
 import { episodeTitle } from "@/helpers";
+import Errors from "@/helpers/Errors";
 import Link from "next/link";
+
+async function fetchStreamPage(episodeId: string) {
+  try {
+    let streamLinks = await getAnimeStream(episodeId);
+
+    let { next, prev } = await getPrevNextEpisodes(episodeId);
+
+    return { streamLinks, next, prev };
+  } catch (err) {
+    console.log(err);
+  }
+}
 
 export default async function StreamPage({ params }: any) {
   let episodeId: string = params?.id;
 
-  let streamLinks = await getAnimeStream(episodeId);
+  let data = await fetchStreamPage(episodeId);
 
-  let { next, prev } = await getPrevNextEpisodes(episodeId);
+  if (!data) throw new Errors(500, "Something is wrong");
+
+  let { streamLinks, next, prev } = data;
 
   return (
     <div className="flex flex-col relative my-4">
