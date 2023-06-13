@@ -8,6 +8,7 @@ import { ChangeEvent, FormEvent, useContext, useState } from "react";
 import { ThemeContext } from "@/providers/ThemeProvider";
 import ThemeSwap from "./ThemeSwap";
 import { useDebouncer } from "@/hooks/useDebouncer";
+import LoginModal from "./LoginModal";
 
 const notoSansJP = Noto_Sans_JP({ weight: "600", subsets: ["latin"] });
 
@@ -65,7 +66,19 @@ export default function Navbar() {
           <ThemeSwap handleTheme={handleTheme} theme={theme} />
         </div>
 
-        <div className="flex flex-auto justify-end">
+        <div className="flex flex-auto gap-2 justify-end">
+          <button
+            className="btn btn-accent"
+            onClick={() => {
+              let windowRef: any = window;
+              let loginModal = windowRef.login_modal;
+
+              return loginModal.showModal();
+            }}
+          >
+            Login
+          </button>
+
           <form onSubmit={handleSubmit} className="flex form-control w-auto">
             <input
               type="text"
