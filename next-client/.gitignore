@@ -36,7 +36,7 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-#firebase
+# firebase
 *firebase*
 *firestore*
 client_secret_*

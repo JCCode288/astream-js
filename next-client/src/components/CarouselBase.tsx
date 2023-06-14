@@ -69,7 +69,7 @@ export default function AniCarousel({ animes }: { animes: IAnimeResult[] }) {
           onBeforeTransitionStart={(swiper) => {
             if (swiper.isEnd) setOnEdge("End");
             else if (swiper.isBeginning) setOnEdge("Beginning");
-            else setOnEdge("Non");
+            else setOnEdge("No");
           }}
           modules={[EffectFlip, Pagination, Autoplay]}
           effect="flip"
@@ -81,7 +81,7 @@ export default function AniCarousel({ animes }: { animes: IAnimeResult[] }) {
             <SwiperSlide
               className={
                 onEdge === "End" || (onEdge === "Beginning" && page > 1)
-                  ? "tooltip tooltip-primary tooltip-bottom"
+                  ? "tooltip max-md:tooltip-open tooltip-primary tooltip-bottom"
                   : ""
               }
               data-tip={message}
