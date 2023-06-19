@@ -7,9 +7,15 @@ import Link from "next/link";
 
 async function fetchStreamPage(episodeId: string) {
   try {
-    let streamLinks = await getAnimeStream(episodeId);
+    let streamLinksPromise = getAnimeStream(episodeId);
+    let nextPrevPromise = getPrevNextEpisodes(episodeId);
 
-    let { next, prev } = await getPrevNextEpisodes(episodeId);
+    const [streamLinks, nextPrev] = await Promise.all([
+      streamLinksPromise,
+      nextPrevPromise,
+    ]);
+
+    const { next, prev } = nextPrev;
 
     return { streamLinks, next, prev };
   } catch (err) {

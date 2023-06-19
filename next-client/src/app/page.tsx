@@ -1,21 +1,40 @@
 import { findUsers, getRecentAnime, getTopAiring } from "@/actions";
 import { AniCard, AniCarousel, Animation, MainPagination } from "@/components";
 import Errors from "@/helpers/Errors";
+import { IAnimeResult } from "@consumet/extensions";
 
 import { notFound } from "next/navigation";
 
 async function fetchMainPage(page: any) {
   try {
-    let topAnimes = await getTopAiring();
-    let animesRecent = await getRecentAnime(page);
+    let data: {
+      topAnimes: IAnimeResult[];
+      animesRecent: IAnimeResult[];
+      users: any[];
+    } = { topAnimes: [], animesRecent: [], users: [] };
+    let topAnimesPromise = getTopAiring();
+    let animesRecentPromise = getRecentAnime(page);
+    let usersPromise = findUsers({});
 
-    let users = await findUsers({});
+    let promiseArr = await Promise.all([
+      topAnimesPromise,
+      animesRecentPromise,
+      usersPromise,
+    ]);
 
-    if (!animesRecent.length) {
-      notFound();
+    let [topAnimes, animesRecent, users] = promiseArr;
+
+    data = {
+      topAnimes,
+      animesRecent,
+      users,
+    };
+
+    if (!data.animesRecent || !data.animesRecent.length) {
+      return notFound();
     }
 
-    return { topAnimes, animesRecent, users };
+    return data;
   } catch (err) {}
 }
 
