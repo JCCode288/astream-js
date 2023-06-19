@@ -14,11 +14,6 @@ interface IUserDTO {
   password: string;
 }
 
-interface IToken extends JwtPayload {
-  id: number;
-  email: string;
-}
-
 export const findUsers = async ({ username, id }: IQuery) => {
   try {
     let query: IQuery = {};
@@ -74,7 +69,7 @@ export const findUserById = async (id: number) => {
   }
 };
 
-export const createUser = async (userData: IUserDTO, token: string) => {
+export const createUser = async (userData: IUserDTO) => {
   try {
     let { username, password, email } = userData;
 
@@ -124,7 +119,18 @@ export const updateUser = async (
     let user = await prisma.user.findUnique({ where: { id } });
 
     if (!user) {
+      throw new Errors(404, "User not found");
     }
+
+    let updatedUser = await prisma.user.update({
+      where: { id: user.id },
+      data: {
+        username,
+        email,
+      },
+    });
+
+    return updatedUser;
   } catch (err) {
     throw err;
   }

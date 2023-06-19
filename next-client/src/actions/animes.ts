@@ -16,6 +16,7 @@ import redis, {
   REDIS_STREAM,
   REDIS_TOPAIR,
 } from "./redis";
+
 import { episodeTitle, parseTitle } from "@/helpers";
 
 const animeProvider = new ANIME.Gogoanime();

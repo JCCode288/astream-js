@@ -1,4 +1,5 @@
 import { PrismaClient } from "@prisma/client";
+import Bcrypt from "./Bcrypt";
 
 class Prisma extends PrismaClient {
   async onInit() {
@@ -12,5 +13,15 @@ class Prisma extends PrismaClient {
 const prisma = new Prisma();
 
 prisma.onInit();
+
+prisma.$use(async (params, next) => {
+  if (params.model === "User" && /(create)/i.test(params.action)) {
+    let hashed = await Bcrypt.hash(params.args.data.password);
+
+    params.args.data.password = hashed;
+  }
+
+  return next(params);
+});
 
 export default prisma;

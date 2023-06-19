@@ -16,7 +16,7 @@ class Bcrypt {
     this.salt = this.createSalt(Number(process.env.SECRET_BCRYPT) || 7);
   }
 
-  createSalt(secret: number) {
+  private createSalt(secret: number) {
     let salt: string = this.bcrypt.genSaltSync(secret);
     return salt;
   }
