@@ -16,13 +16,11 @@ async function fetchMainPage(page: any) {
     let animesRecentPromise = getRecentAnime(page);
     let usersPromise = findUsers({});
 
-    let promiseArr = await Promise.all([
+    let [topAnimes, animesRecent, users] = await Promise.all([
       topAnimesPromise,
       animesRecentPromise,
       usersPromise,
     ]);
-
-    let [topAnimes, animesRecent, users] = promiseArr;
 
     data = {
       topAnimes,
@@ -35,7 +33,9 @@ async function fetchMainPage(page: any) {
     }
 
     return data;
-  } catch (err) {}
+  } catch (err) {
+    console.log(err, "<<<< Main Page Error");
+  }
 }
 
 export default async function Home({ searchParams }: { searchParams: any }) {

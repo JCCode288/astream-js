@@ -25,23 +25,29 @@ export default function AniCarousel({ animes }: { animes: IAnimeResult[] }) {
     else return "";
   }, [onEdge]);
 
-  const fetchAnimes = async () => {
+  const fetchAnimes = async (pageCur: number) => {
     try {
       setLoading(true);
-      if (page > 1) {
-        let animesFetched = await getTopAiring(page);
-        setAnimesState([...animesFetched]);
-      } else {
+      if (pageCur <= 1) {
         setAnimesState(animes);
       }
+
+      let animesFetched = await getTopAiring(pageCur);
+
+      setAnimesState(() => {
+        return [...animesFetched];
+      });
+
       setLoading(false);
     } catch (err) {
       setLoading(false);
+
+      throw err;
     }
   };
 
   useEffect(() => {
-    fetchAnimes();
+    fetchAnimes(page);
   }, [page]);
 
   const handlePagination = (swiper: SwiperClass) => {

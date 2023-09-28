@@ -149,7 +149,7 @@ export const searchAnime = async (query: string, page: number) => {
 
       await RedisService.set(
         RedisKey.SEARCH + `${query}/${page}`,
-        JSON.stringify(animes),
+        animes,
         60 * 60 * 4
       );
     }
@@ -179,11 +179,11 @@ export const getPrevNextEpisodes = async (episodeId: string) => {
     let animeEpisodes = (
       await animeProvider.fetchAnimeInfo(animeId)
     ).episodes?.reduce((base: [string, IAnimeEpisode][] = [], el) => {
-      if (el && (el.number - 1).toString() === episodeNow) {
+      if (el && episodeNow === (el.number + 1).toString()) {
         base.push(["prev", el]);
       }
 
-      if (el && (el.number + 1).toString() === episodeNow) {
+      if (el && episodeNow === (el.number - 1).toString()) {
         base.push(["next", el]);
       }
 
@@ -195,7 +195,7 @@ export const getPrevNextEpisodes = async (episodeId: string) => {
 
       await RedisService.set(
         RedisKey.PREVNEXT + episodeId,
-        JSON.stringify(episodes),
+        episodes,
         60 * 60 * 24
       );
     }
@@ -222,7 +222,7 @@ export const getAnimesByGenres = async (genres: string, page: number = 1) => {
       });
       await RedisService.set(
         `${RedisKey.GENRES}${genres}/${page}`,
-        JSON.stringify(aniGenres),
+        aniGenres,
         60 * 15
       );
     }
@@ -232,3 +232,14 @@ export const getAnimesByGenres = async (genres: string, page: number = 1) => {
     throw err;
   }
 };
+
+// export const getAnimeSourceURL = async (episodeId: string) => {
+//   console.log(episodeId);
+//   try {
+//     const url = await animeProvider.fetchEpisodeSources(episodeId);
+
+//     return url;
+//   } catch (err) {
+//     throw err;
+//   }
+// };
