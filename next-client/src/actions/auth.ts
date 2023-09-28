@@ -4,7 +4,7 @@ import { signInWithPopup } from "firebase/auth";
 import { OAuth2Client } from "google-auth-library";
 import dotenv from "dotenv";
 import prisma from "./Prisma";
-import Bcrypt from "./Bcrypt";
+import { BcryptService } from "./Bcrypt";
 import { createUser } from "./users";
 import Token from "./Token";
 import Errors from "@/helpers/Errors";

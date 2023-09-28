@@ -206,7 +206,7 @@ export const getPrevNextEpisodes = async (episodeId: string) => {
   }
 };
 
-export const getByGenres = async (genres: string, page: number = 1) => {
+export const getAnimesByGenres = async (genres: string, page: number = 1) => {
   try {
     let aniGenres: ISearch<IAnimeResult> = await RedisService.get(
       `${RedisKey.GENRES}${genres}/${page}`
