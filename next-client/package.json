@@ -9,14 +9,14 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@consumet/extensions": "^1.4.17",
-    "@prisma/client": "^4.15.0",
-    "@react-oauth/google": "^0.11.0",
+    "@consumet/extensions": "1.4.17",
+    "@prisma/client": "4.15.0",
+    "@react-oauth/google": "0.11.0",
     "@supabase/supabase-js": "^2.24.0",
     "@types/node": "20.2.0",
     "@types/react": "18.2.6",
     "@types/react-dom": "18.2.4",
-    "bcryptjs": "^2.4.3",
+    "bcryptjs": "2.4.3",
     "eslint": "8.40.0",
     "eslint-config-next": "13.4.2",
     "firebase": "^9.22.2",

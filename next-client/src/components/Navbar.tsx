@@ -9,6 +9,7 @@ import { ThemeContext } from "@/providers/ThemeProvider";
 import ThemeSwap from "./ThemeSwap";
 import { useDebouncer } from "@/hooks/useDebouncer";
 import LoginModal from "./LoginModal";
+import LoginComponent from "./Login";
 
 const notoSansJP = Noto_Sans_JP({ weight: "600", subsets: ["latin"] });
 
@@ -27,7 +28,7 @@ export default function Navbar() {
 
   const searchDebounce = useDebouncer((val: string) => {
     handleSearch(val);
-  }, 1300);
+  }, 700);
 
   const inputChange = (e: ChangeEvent) => {
     let { value }: any = e.target;
@@ -67,27 +68,18 @@ export default function Navbar() {
         </div>
 
         <div className="flex flex-auto gap-2 justify-end">
-          <button
-            className="btn btn-accent"
-            onClick={() => {
-              let windowRef: any = window;
-              let loginModal = windowRef.login_modal;
-
-              return loginModal.showModal();
-            }}
-          >
-            Login
-          </button>
-
-          <form onSubmit={handleSubmit} className="flex form-control w-auto">
-            <input
-              type="text"
-              placeholder="Search"
-              className="flex input text-accent input-bordered focus:border-primary-focus border-2 rounded-[5px] w-28 sm:w-auto"
-              value={search}
-              onChange={inputChange}
-            />
-          </form>
+          {/* <LoginComponent /> */}
+          <div>
+            <form onSubmit={handleSubmit} className="flex form-control w-auto">
+              <input
+                type="text"
+                placeholder="Search"
+                className="flex input text-accent input-bordered focus:border-primary-focus border-2 rounded-[5px] w-28 sm:w-auto"
+                value={search}
+                onChange={inputChange}
+              />
+            </form>
+          </div>
         </div>
       </div>
     </nav>

@@ -42,4 +42,4 @@ class Bcrypt {
   }
 }
 
-export default new Bcrypt();
+export const BcryptService = new Bcrypt();

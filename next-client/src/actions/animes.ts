@@ -7,15 +7,7 @@ import {
   IEpisodeServer,
   ISearch,
 } from "@consumet/extensions";
-import redis, {
-  REDIS_DETAILS,
-  REDIS_GENRES,
-  REDIS_PREVNEXT,
-  REDIS_RECENT,
-  REDIS_SEARCH,
-  REDIS_STREAM,
-  REDIS_TOPAIR,
-} from "./redis";
+import { RedisKey, RedisService } from "./redis";
 
 import { episodeTitle, parseTitle } from "@/helpers";
 
@@ -25,29 +17,24 @@ export const getRecentAnime = async (page: number = 1, type?: number) => {
   try {
     let opts = [page, type];
 
-    let animesCached = await redis.get(REDIS_RECENT + page);
-    let animes: ISearch<IAnimeResult>;
+    let animes: ISearch<IAnimeResult> = await RedisService.get(
+      RedisKey.RECENT + page
+    );
 
-    if (animesCached) {
-      animes = JSON.parse(animesCached);
-    } else {
+    if (!animes) {
       animes = await animeProvider.fetchRecentEpisodes(...opts);
-      await redis.set(
-        REDIS_RECENT + animes.currentPage,
-        JSON.stringify(animes),
-        "EX",
-        60 * 15
-      );
+
+      animes.results = animes.results.map((anime) => {
+        let title = parseTitle(anime);
+        anime.title = title;
+
+        return anime;
+      });
+
+      await RedisService.set(RedisKey.RECENT + animes.currentPage, animes);
     }
 
-    const parsedAnimes = animes.results.map((anime) => {
-      let title = parseTitle(anime);
-      anime.title = title;
-
-      return anime;
-    });
-
-    return parsedAnimes;
+    return animes.results;
   } catch (err) {
     throw err;
   }
@@ -59,26 +46,19 @@ export const getAnimeDetail = async (id: string) => {
       throw new Error("Anime ID is not provided");
     }
 
-    const cachedDetail = await redis.get(REDIS_DETAILS + id);
-    let animeInfo: IAnimeInfo;
+    let animeInfo: IAnimeInfo = await RedisService.get(RedisKey.DETAILS + id);
 
-    if (cachedDetail) {
-      animeInfo = JSON.parse(cachedDetail);
-    } else {
+    if (!animeInfo) {
       animeInfo = await animeProvider.fetchAnimeInfo(id);
-      await redis.set(
-        REDIS_DETAILS + id,
-        JSON.stringify(animeInfo),
-        "EX",
-        60 * 15
-      );
-    }
 
-    animeInfo.title = parseTitle(animeInfo);
-    animeInfo.episodes = animeInfo.episodes?.map((anime) => {
-      anime.title = episodeTitle(anime.id);
-      return anime;
-    });
+      animeInfo.title = parseTitle(animeInfo);
+      animeInfo.episodes = animeInfo.episodes?.map((anime) => {
+        anime.title = episodeTitle(anime.id);
+        return anime;
+      });
+
+      await RedisService.set(RedisKey.DETAILS + id, animeInfo);
+    }
 
     return animeInfo;
   } catch (err) {
@@ -92,26 +72,23 @@ export const getAnimeStream = async (episodeId: string) => {
       throw new Error("Episode ID is not provided");
     }
 
-    let cachedLinks = await redis.get(REDIS_STREAM + episodeId);
-    let streamLinks: IEpisodeServer[];
-
-    if (cachedLinks) {
-      streamLinks = JSON.parse(cachedLinks);
-      return streamLinks;
-    }
-
-    streamLinks = await animeProvider.fetchEpisodeServers(episodeId);
-
-    if (!streamLinks.length) {
-      throw new Error("Episode not found");
-    }
-
-    await redis.set(
-      REDIS_STREAM + episodeId,
-      JSON.stringify(streamLinks),
-      "EX",
-      60 * 60 * 24 * 4
+    let streamLinks: IEpisodeServer[] = await RedisService.get(
+      RedisKey.STREAM + episodeId
     );
+
+    if (!streamLinks) {
+      streamLinks = await animeProvider.fetchEpisodeServers(episodeId);
+
+      if (!streamLinks.length) {
+        throw new Error("Episode not found");
+      }
+
+      await RedisService.set(
+        RedisKey.STREAM + episodeId,
+        streamLinks,
+        60 * 60 * 24 * 2
+      );
+    }
 
     return streamLinks;
   } catch (err) {
@@ -122,33 +99,32 @@ export const getAnimeStream = async (episodeId: string) => {
 export const getTopAiring = async (
   page: number | string = 1,
   type?: number
-) => {
+): Promise<IAnimeResult[]> => {
   try {
     let opts = [+page, type];
 
-    let cachedTop = await redis.get(REDIS_TOPAIR + page);
-    let animes: ISearch<IAnimeResult>;
+    let animes: ISearch<IAnimeResult> = await RedisService.get(
+      RedisKey.TOPAIR + page
+    );
 
-    if (cachedTop) {
-      animes = JSON.parse(cachedTop);
-    } else {
+    if (!animes) {
       animes = await animeProvider.fetchTopAiring(...opts);
-      await redis.set(
-        REDIS_TOPAIR + animes.currentPage,
-        JSON.stringify(animes),
-        "EX",
+
+      animes.results = animes.results.map((anime) => {
+        let title = parseTitle(anime);
+        anime.title = title;
+
+        return anime as IAnimeResult;
+      });
+
+      await RedisService.set(
+        RedisKey.TOPAIR + animes.currentPage,
+        animes,
         60 * 60 * 24
       );
     }
 
-    const parsedAnimes = animes.results.map((anime) => {
-      let title = parseTitle(anime);
-      anime.title = title;
-
-      return anime;
-    });
-
-    return parsedAnimes;
+    return animes.results;
   } catch (err) {
     throw err;
   }
@@ -156,29 +132,28 @@ export const getTopAiring = async (
 
 export const searchAnime = async (query: string, page: number) => {
   try {
-    let cachedSearch = await redis.get(REDIS_SEARCH + query + `/${page}`);
-    let animes: ISearch<IAnimeResult>;
+    let animes: ISearch<IAnimeResult> = await RedisService.get(
+      RedisKey.SEARCH + query + `/${page}`
+    );
 
-    if (cachedSearch) {
-      animes = JSON.parse(cachedSearch);
-    } else {
+    if (!animes) {
       animes = await animeProvider.search(query, page);
-      await redis.set(
-        REDIS_SEARCH + `${query}/${page}`,
+
+      animes.results = animes.results.map((anime) => {
+        let title = parseTitle(anime);
+        anime.title = title;
+
+        return anime;
+      });
+
+      await RedisService.set(
+        RedisKey.SEARCH + `${query}/${page}`,
         JSON.stringify(animes),
-        "EX",
         60 * 60 * 4
       );
     }
 
-    const parsedAnimes = animes.results.map((anime) => {
-      let title = parseTitle(anime);
-      anime.title = title;
-
-      return anime;
-    });
-
-    return parsedAnimes;
+    return animes.results;
   } catch (err) {
     throw err;
   }
@@ -191,44 +166,43 @@ interface EpisodeStream {
 
 export const getPrevNextEpisodes = async (episodeId: string) => {
   try {
-    let cachedEpisodes = await redis.get(REDIS_PREVNEXT + episodeId);
-    let episodes: EpisodeStream;
+    let episodes: EpisodeStream = await RedisService.get(
+      RedisKey.PREVNEXT + episodeId
+    );
 
-    if (cachedEpisodes) {
-      episodes = JSON.parse(cachedEpisodes);
+    if (episodes) {
       return episodes;
     }
 
     let episodeIdSplitted = episodeId.split("-");
+
     let episodeNow = episodeIdSplitted[episodeIdSplitted.length - 1];
 
     let animeId = await animeProvider.fetchAnimeIdFromEpisodeId(episodeId);
 
     let animeEpisodes = (
       await animeProvider.fetchAnimeInfo(animeId)
-    ).episodes?.filter((el) => {
-      if ((el.number - 1).toString() === episodeNow) return el;
-      if ((el.number + 1).toString() === episodeNow) return el;
-    });
-
-    episodes = {};
-
-    if (animeEpisodes?.length) {
-      if (+episodeNow !== 1) {
-        episodes.prev = animeEpisodes[0];
-      } else {
-        episodes.next = animeEpisodes[0];
+    ).episodes?.reduce((base: [string, IAnimeEpisode][] = [], el) => {
+      if (el && (el.number - 1).toString() === episodeNow) {
+        base.push(["prev", el]);
       }
 
-      if (animeEpisodes[1]) episodes.next = animeEpisodes[1];
-    }
+      if (el && (el.number + 1).toString() === episodeNow) {
+        base.push(["next", el]);
+      }
 
-    await redis.set(
-      REDIS_PREVNEXT + episodeId,
-      JSON.stringify(episodes),
-      "EX",
-      60 * 60 * 24
-    );
+      return base;
+    }, []);
+
+    if (animeEpisodes?.length) {
+      episodes = Object.fromEntries(animeEpisodes);
+
+      await RedisService.set(
+        RedisKey.PREVNEXT + episodeId,
+        JSON.stringify(episodes),
+        60 * 60 * 24
+      );
+    }
 
     return episodes;
   } catch (err) {
@@ -236,30 +210,26 @@ export const getPrevNextEpisodes = async (episodeId: string) => {
   }
 };
 
-export const getAnimesByGenres = async (genres: string, page: number = 1) => {
+export const getByGenres = async (genres: string, page: number = 1) => {
   try {
-    let cachedAniGenres = await redis.get(`${REDIS_GENRES}${genres}/${page}`);
-    let aniGenres: ISearch<IAnimeResult>;
-
-    if (cachedAniGenres) {
-      aniGenres = JSON.parse(cachedAniGenres);
-      return aniGenres;
-    }
-
-    aniGenres = await animeProvider.fetchGenreInfo(genres, +page);
-    await redis.set(
-      `${REDIS_GENRES}${genres}/${page}`,
-      JSON.stringify(aniGenres),
-      "EX",
-      60 * 15
+    let aniGenres: ISearch<IAnimeResult> = await RedisService.get(
+      `${RedisKey.GENRES}${genres}/${page}`
     );
 
-    aniGenres.results = aniGenres.results.map((anime) => {
-      let title = parseTitle(anime);
-      anime.title = title;
+    if (!aniGenres) {
+      aniGenres = await animeProvider.fetchGenreInfo(genres, +page);
+      aniGenres.results = aniGenres.results.map((anime) => {
+        let title = parseTitle(anime);
+        anime.title = title;
 
-      return anime;
-    });
+        return anime;
+      });
+      await RedisService.set(
+        `${RedisKey.GENRES}${genres}/${page}`,
+        JSON.stringify(aniGenres),
+        60 * 15
+      );
+    }
 
     return aniGenres;
   } catch (err) {

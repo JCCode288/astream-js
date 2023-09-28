@@ -1,5 +1,6 @@
 import { Redis } from "ioredis";
 import dotenv from "dotenv";
+import { IAnimeResult, ISearch } from "@consumet/extensions";
 
 if (
   process.env.NODE_ENV !== "production" &&
@@ -14,14 +15,36 @@ const config = {
   password: process.env.REDIS_PASSWORD || "",
 };
 
-const redis = new Redis(config);
+export class RedisService {
+  private static readonly redis_client = new Redis(config);
 
-export default redis;
+  static async set(key: string, animes: any, seconds: number = 60 * 15) {
+    try {
+      await this.redis_client.set(key, JSON.stringify(animes), "EX", seconds);
+    } catch (err) {
+      throw err;
+    }
+  }
 
-export const REDIS_RECENT = "animes/recent/";
-export const REDIS_TOPAIR = "animes/topAiring/";
-export const REDIS_DETAILS = "animes/details/";
-export const REDIS_SEARCH = "animes/search/";
-export const REDIS_PREVNEXT = "animes/animeId/";
-export const REDIS_STREAM = "animes/stream/";
-export const REDIS_GENRES = "animes/byGenres/";
+  static async get(key: string) {
+    try {
+      const animes = await this.redis_client.get(key);
+
+      if (!animes) return null;
+
+      return JSON.parse(animes);
+    } catch (err) {
+      throw err;
+    }
+  }
+}
+
+export const RedisKey = {
+  RECENT: "animes/recent/",
+  TOPAIR: "animes/topAiring/",
+  DETAILS: "animes/details/",
+  SEARCH: "animes/search/",
+  PREVNEXT: "animes/animeId/",
+  STREAM: "animes/stream/",
+  GENRES: "animes/byGenres/",
+};

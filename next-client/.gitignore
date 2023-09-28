@@ -40,3 +40,8 @@ next-env.d.ts
 *firebase*
 *firestore*
 client_secret_*
+
+# Docker files
+Dockerfile
+.dockerignore
+docker-compose.yml

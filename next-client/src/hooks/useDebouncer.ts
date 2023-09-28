@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 
-export const useDebouncer = (cb: any, delayMs: number = 1000) => {
+export const useDebouncer = (cb: any, delayMs: number = 700) => {
   const [timeoutState, setTimeoutState]: [any, Dispatch<SetStateAction<any>>] =
     useState(null);
 

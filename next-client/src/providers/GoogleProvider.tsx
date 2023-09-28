@@ -6,11 +6,7 @@ export default function GoogleProvider({
   children: React.ReactNode;
 }) {
   return (
-    <GoogleOAuthProvider
-      clientId={
-        "546786885789-31t00nrvsdhb05h45juu204df043839j.apps.googleusercontent.com"
-      }
-    >
+    <GoogleOAuthProvider clientId={process.env.GOOGLE_AUTH_KEY ?? "no auth"}>
       {children}
     </GoogleOAuthProvider>
   );
