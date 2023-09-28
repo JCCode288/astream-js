@@ -1,4 +1,4 @@
-export default function ButtonCTA({ title, actions, shadow }: any) {
+export default function ButtonCTA({ title, actions, shadow, location }: any) {
   switch (shadow) {
     case "small":
       shadow = "shadow-sm";
@@ -19,7 +19,7 @@ export default function ButtonCTA({ title, actions, shadow }: any) {
   return (
     <button
       onClick={actions}
-      className={"btn btn-accent btn-outline rounded-md " + shadow}
+      className={"btn btn-accent btn-outline rounded-md " + shadow + location}
     >
       {title}
     </button>

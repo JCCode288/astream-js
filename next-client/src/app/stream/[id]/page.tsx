@@ -1,4 +1,5 @@
 import { getAnimeStream, getPrevNextEpisodes } from "@/actions";
+import { EpisodeStream } from "@/actions/action.interface";
 import { BackBtn, StreamContainer } from "@/components";
 import ButtonCTA from "@/components/ButtonCTA";
 import { episodeTitle } from "@/helpers";
@@ -15,7 +16,7 @@ async function fetchStreamPage(episodeId: string) {
       nextPrevPromise,
     ]);
 
-    const { next, prev } = nextPrev;
+    const { next, prev }: EpisodeStream = nextPrev;
 
     return { streamLinks, next, prev };
   } catch (err) {
@@ -43,17 +44,17 @@ export default async function StreamPage({ params }: any) {
         </div>
       </div>
       <StreamContainer links={streamLinks} />
-      <div className="btn-group self-center gap-2">
+      <div className="btn-group self-center gap-2 p-4">
         {prev ? (
           <Link href={`/stream/${prev?.id}`}>
-            <ButtonCTA title="Prev" shadow="small" />
+            <ButtonCTA title="Prev" shadow="small" location="justify-end" />
           </Link>
         ) : (
           ""
         )}
         {next ? (
           <Link href={`/stream/${next?.id}`}>
-            <ButtonCTA title="Next" shadow="small" />
+            <ButtonCTA title="Next" shadow="small" location="justify-start" />
           </Link>
         ) : (
           ""

@@ -10,6 +10,7 @@ import {
 import { RedisKey, RedisService } from "./redis";
 
 import { episodeTitle, parseTitle } from "@/helpers";
+import { EpisodeStream } from "./action.interface";
 
 const animeProvider = new ANIME.Gogoanime();
 
@@ -158,11 +159,6 @@ export const searchAnime = async (query: string, page: number) => {
     throw err;
   }
 };
-
-interface EpisodeStream {
-  next?: IAnimeEpisode | undefined;
-  prev?: IAnimeEpisode | undefined;
-}
 
 export const getPrevNextEpisodes = async (episodeId: string) => {
   try {
