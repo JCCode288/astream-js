@@ -16,7 +16,8 @@ async function fetchStreamPage(episodeId: string) {
       nextPrevPromise,
     ]);
 
-    const { next, prev }: EpisodeStream = nextPrev;
+    const prev = nextPrev?.prev;
+    const next = nextPrev?.next;
 
     return { streamLinks, next, prev };
   } catch (err) {
