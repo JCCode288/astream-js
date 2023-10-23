@@ -8,8 +8,6 @@ import { ChangeEvent, FormEvent, useContext, useState } from "react";
 import { ThemeContext } from "@/providers/ThemeProvider";
 import ThemeSwap from "./ThemeSwap";
 import { useDebouncer } from "@/hooks/useDebouncer";
-import LoginModal from "./LoginModal";
-import LoginComponent from "./Login";
 
 const notoSansJP = Noto_Sans_JP({ weight: "600", subsets: ["latin"] });
 
