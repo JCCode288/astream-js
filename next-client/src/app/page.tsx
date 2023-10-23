@@ -1,4 +1,4 @@
-import { findUsers, getRecentAnime, getTopAiring } from "@/actions";
+import { getRecentAnime, getTopAiring } from "@/actions";
 import { AniCard, AniCarousel, Animation, MainPagination } from "@/components";
 import Errors from "@/helpers/Errors";
 import { IAnimeResult } from "@consumet/extensions";
@@ -10,22 +10,18 @@ async function fetchMainPage(page: any) {
     let data: {
       topAnimes: IAnimeResult[];
       animesRecent: IAnimeResult[];
-      users: any[];
-    } = { topAnimes: [], animesRecent: [], users: [] };
+    } = { topAnimes: [], animesRecent: [] };
     let topAnimesPromise = getTopAiring();
     let animesRecentPromise = getRecentAnime(page);
-    let usersPromise = findUsers({});
 
-    let [topAnimes, animesRecent, users] = await Promise.all([
+    let [topAnimes, animesRecent] = await Promise.all([
       topAnimesPromise,
       animesRecentPromise,
-      usersPromise,
     ]);
 
     data = {
       topAnimes,
       animesRecent,
-      users,
     };
 
     if (!data.animesRecent || !data.animesRecent.length) {
@@ -45,7 +41,7 @@ export default async function Home({ searchParams }: { searchParams: any }) {
 
   if (!data) throw new Errors(500, "Something is wrong");
 
-  let { topAnimes, animesRecent, users } = data;
+  let { topAnimes, animesRecent } = data;
 
   return (
     <>

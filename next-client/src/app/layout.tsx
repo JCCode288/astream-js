@@ -1,4 +1,4 @@
-import { Footer, LoginModal, Navbar } from "@/components";
+import { Footer, Navbar } from "@/components";
 import "./globals.css";
 import "swiper/css/bundle";
 
@@ -41,7 +41,6 @@ export default function RootLayout({
       >
         <MainProvider>
           <Navbar />
-          <LoginModal />
           {children}
           <Footer />
         </MainProvider>
