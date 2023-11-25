@@ -1,6 +1,6 @@
 import { IAnimeEpisode } from "@consumet/extensions";
 
-export interface EpisodeStream {
+export interface IEpisodeStream {
   next?: IAnimeEpisode;
   prev?: IAnimeEpisode;
 }

@@ -5,24 +5,27 @@ import { IAnimeResult } from "@consumet/extensions";
 
 import { notFound } from "next/navigation";
 
+interface IMainPageData {
+  topAnimes: IAnimeResult[];
+  animesRecent: IAnimeResult[];
+}
+
 async function fetchMainPage(page: any) {
   try {
-    let data: {
-      topAnimes: IAnimeResult[];
-      animesRecent: IAnimeResult[];
-    } = { topAnimes: [], animesRecent: [] };
-    let topAnimesPromise = getTopAiring();
-    let animesRecentPromise = getRecentAnime(page);
+    let data: IMainPageData = { topAnimes: [], animesRecent: [] };
 
     let [topAnimes, animesRecent] = await Promise.all([
-      topAnimesPromise,
-      animesRecentPromise,
+      getTopAiring(),
+      getRecentAnime(page),
     ]);
 
-    data = {
-      topAnimes,
-      animesRecent,
-    };
+    if (topAnimes && topAnimes.length) {
+      data.topAnimes = topAnimes;
+    }
+
+    if (animesRecent && animesRecent.length) {
+      data.animesRecent = animesRecent;
+    }
 
     if (!data.animesRecent || !data.animesRecent.length) {
       return notFound();
