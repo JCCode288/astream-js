@@ -1,6 +1,5 @@
 import { Redis } from "ioredis";
 import dotenv from "dotenv";
-import { IAnimeResult, ISearch } from "@consumet/extensions";
 
 if (
   process.env.NODE_ENV !== "production" &&

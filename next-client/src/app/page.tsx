@@ -6,6 +6,7 @@ import { IAnimeResult } from "@consumet/extensions";
 import { notFound } from "next/navigation";
 
 export interface IMainPage {
+
   topAnimes: IAnimeResult[];
   animesRecent: IAnimeResult[];
 }
@@ -16,15 +17,19 @@ async function fetchMainPage(page: any) {
     let topAnimesPromise = getTopAiring();
     let animesRecentPromise = getRecentAnime(page);
 
+
     let [topAnimes, animesRecent] = await Promise.all([
-      topAnimesPromise,
-      animesRecentPromise,
+      getTopAiring(),
+      getRecentAnime(page),
     ]);
 
-    data = {
-      topAnimes,
-      animesRecent,
-    };
+    if (topAnimes && topAnimes.length) {
+      data.topAnimes = topAnimes;
+    }
+
+    if (animesRecent && animesRecent.length) {
+      data.animesRecent = animesRecent;
+    }
 
     console.log(data, "<<<<< data");
 

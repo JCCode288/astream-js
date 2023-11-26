@@ -1,5 +1,5 @@
 import { getAnimeStream, getPrevNextEpisodes } from "@/actions";
-import { EpisodeStream } from "@/actions/action.interface";
+import { IEpisodeStream } from "@/actions/action.interface";
 import { BackBtn, StreamContainer } from "@/components";
 import ButtonCTA from "@/components/ButtonCTA";
 import { episodeTitle } from "@/helpers";

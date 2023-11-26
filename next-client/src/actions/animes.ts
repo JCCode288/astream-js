@@ -10,7 +10,7 @@ import {
 import { RedisKey, RedisService } from "./redis";
 
 import { episodeTitle, parseTitle } from "@/helpers";
-import { EpisodeStream } from "./action.interface";
+import { IEpisodeStream } from "./action.interface";
 
 const animeProvider = new ANIME.Gogoanime();
 
@@ -162,7 +162,7 @@ export const searchAnime = async (query: string, page: number) => {
 
 export const getPrevNextEpisodes = async (episodeId: string) => {
   try {
-    let episodes: EpisodeStream = await RedisService.get(
+    let episodes: IEpisodeStream = await RedisService.get(
       RedisKey.PREVNEXT + episodeId
     );
 
@@ -232,14 +232,3 @@ export const getAnimesByGenres = async (genres: string, page: number = 1) => {
     throw err;
   }
 };
-
-// export const getAnimeSourceURL = async (episodeId: string) => {
-//   console.log(episodeId);
-//   try {
-//     const url = await animeProvider.fetchEpisodeSources(episodeId);
-
-//     return url;
-//   } catch (err) {
-//     throw err;
-//   }
-// };
