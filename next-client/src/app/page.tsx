@@ -5,12 +5,14 @@ import { IAnimeResult } from "@consumet/extensions";
 
 import { notFound } from "next/navigation";
 
+export interface IMainPage {
+  topAnimes: IAnimeResult[];
+  animesRecent: IAnimeResult[];
+}
+
 async function fetchMainPage(page: any) {
   try {
-    let data: {
-      topAnimes: IAnimeResult[];
-      animesRecent: IAnimeResult[];
-    } = { topAnimes: [], animesRecent: [] };
+    let data: IMainPage = { topAnimes: [], animesRecent: [] };
     let topAnimesPromise = getTopAiring();
     let animesRecentPromise = getRecentAnime(page);
 
@@ -23,6 +25,8 @@ async function fetchMainPage(page: any) {
       topAnimes,
       animesRecent,
     };
+
+    console.log(data, "<<<<< data");
 
     if (!data.animesRecent || !data.animesRecent.length) {
       return notFound();
